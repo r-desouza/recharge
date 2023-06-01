@@ -8,7 +8,7 @@ require('./database');
 
 async function main(){
     await app.listen(app.get('port'))
-    console.log('concha', app.get('port'));
+    console.log(':v', app.get('port'));
 }
 
 main();
