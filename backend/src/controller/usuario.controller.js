@@ -17,7 +17,7 @@ usuarioCtrl.createUsuario = async(req, res) =>{
         edad: edad
     })
     await newUsuario.save();
-    res.json({message: "usuario creado"})
+    res.json({message: "200"})
 }
 
 usuarioCtrl.getUsuarioById = async(req, res) =>{
@@ -27,7 +27,7 @@ usuarioCtrl.getUsuarioById = async(req, res) =>{
 
 usuarioCtrl.deleteUsuario = async(req, res) =>{
     await Usuario.findByIdAndDelete(req.params.id)
-    res.json({message: "usuario borrado"})
+    res.json({message: "200"})
 }
 
 usuarioCtrl.updateUsuario = async(req, res) =>{
@@ -40,7 +40,7 @@ usuarioCtrl.updateUsuario = async(req, res) =>{
         edad: edad
     })
 
-    res.json({message: "usuario updateado"})
+    res.json({message: "200"})
 }
 
 module.exports = usuarioCtrl;

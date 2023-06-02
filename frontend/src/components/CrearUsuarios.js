@@ -30,24 +30,34 @@ const CrearUsuarios = () => {
     };
 
 
+/*async function postJSON() {
       try {
-        const response =  fetch("http://localhost:4000/api/usuarios", {
+        const response = await fetch("http://localhost:4000/api/usuarios", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newUser),
         })
-        //.then(console.log(response.json));
-
+        
         const result = response.json();
         console.log("Success:", result);
       } catch (error) {
         console.error("Error:", error);
       }
-    
+    }
 
+    postJSON();*/ 
 
+    fetch("http://localhost:4000/api/usuarios", {
+      method: 'POST',
+      body: JSON.stringify(newUser),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+
+    }).then(response => response.json())
+    .then(data => { console.log(data) })
 
     setUsuario({ ...valorInicial });
   };
