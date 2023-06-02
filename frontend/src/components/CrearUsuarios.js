@@ -11,54 +11,39 @@ const CrearUsuarios = () => {
   };
 
   const [usuario, setUsuario] = useState(valorInicial);
-
+/*
   const capturarDatos = (e) => {
     const { name, value } = e.target;
     setUsuario({ ...usuario, [name]: value });
+  };*/
+
+
+  const capturarDatos = (e) => {
+    const { name, value } = e.target;
+    setUsuario((prev) => ({ ...prev, [name]: value }));
   };
 
-  const guardarDatos = (e) => {
+  const guardarDatos = async (e) => {
+
     e.preventDefault();
 
     // POST logic
-    const newUser = {
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      edad: usuario.edad,
-      telefono: usuario.telefono,
-      correo: usuario.correo,
-    };
 
-
-/*async function postJSON() {
       try {
         const response = await fetch("http://localhost:4000/api/usuarios", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(newUser),
-        })
-        
+          body: JSON.stringify(usuario),
+        });
+
         const result = response.json();
         console.log("Success:", result);
       } catch (error) {
         console.error("Error:", error);
       }
-    }
-
-    postJSON();*/ 
-
-    fetch("http://localhost:4000/api/usuarios", {
-      method: 'POST',
-      body: JSON.stringify(newUser),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-
-    }).then(response => response.json())
-    .then(data => { console.log(data) })
-
+    
     setUsuario({ ...valorInicial });
   };
 
