@@ -11,12 +11,6 @@ const CrearUsuarios = () => {
   };
 
   const [usuario, setUsuario] = useState(valorInicial);
-/*
-  const capturarDatos = (e) => {
-    const { name, value } = e.target;
-    setUsuario({ ...usuario, [name]: value });
-  };*/
-
 
   const capturarDatos = (e) => {
     const { name, value } = e.target;
@@ -26,8 +20,6 @@ const CrearUsuarios = () => {
   const guardarDatos = async (e) => {
 
     e.preventDefault();
-
-    // POST logic
 
       try {
         const response = await fetch("http://localhost:4000/api/usuarios", {
