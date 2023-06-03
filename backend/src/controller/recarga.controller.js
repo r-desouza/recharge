@@ -21,16 +21,16 @@ recargaCtrl.createRecarga = async(req, res) =>{
 }
 
 recargaCtrl.getRecargaById = async(req, res) =>{
-    const recarga = await recarga.findById(req.params.id)
+    const recarga = await Recarga.findById(req.params.id)
     res.json(recarga)
 }
 
-recargaCtrl.deleterecarga = async(req, res) =>{
+recargaCtrl.deleteRecarga = async(req, res) =>{
     await Recarga.findByIdAndDelete(req.params.id)
     res.json({message: "200"})
 }
 
-recargaCtrl.updaterecarga = async(req, res) =>{
+recargaCtrl.updateRecarga = async(req, res) =>{
     const {idComprador, montoRecarga, paisRecarga, companiaRecarga, estadoRecarga} = req.body;
     await Recarga.findByIdAndUpdate(req.params.id, {
         idComprador: idComprador,

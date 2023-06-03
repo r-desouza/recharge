@@ -1,5 +1,6 @@
 import { set } from "mongoose";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const CrearUsuarios = () => {
   const valorInicial = {
@@ -23,17 +24,9 @@ const CrearUsuarios = () => {
     e.preventDefault();
 
       try {
-        const response = await fetch("http://localhost:4000/api/usuarios/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(usuario),
-        }).then(res => res.ok? res.json() : console.log("no era aca el ok"))
-        .then(json => console.log("Este es el resultado " + json))
 
-        // const result = response.json();
-        // console.log("Success:", result);
+        await axios.post("http://localhost:4000/api/usuarios/", usuario)
+
       } catch (error) {
         console.error("Error:", error);
       }

@@ -1,40 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ListaUsuario = () => {
   const [lista, setLista] = useState([]);
 
   useEffect(() => {
     getUsuarios();
-  }, [lista]);
+  },[]);
 
   const getUsuarios = async () => {
-    try {
-      await fetch("http://localhost:4000/api/usuarios/", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => setLista(data));
 
-      console.log("aca se ejecuta una vez");
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    axios.get("http://localhost:4000/api/usuarios/")
+    .then(response => setLista(response.data))
+    .catch(error => console.error("Error:", error))
+
   };
 
   const eliminarUsuario = async (id) => {
-    try {
-      await fetch("http://localhost:4000/api/usuarios/" + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => console.log("Success: ", res.ok));
-    } catch (error) {
-      console.error("Error:", error);
-    }
+
+    axios.delete("http://localhost:4000/api/usuarios/" + id)
+    .then(response => console.log("Success: ", response.statusText))
+    .catch(error => console.error("Error:", error))
+
   };
 
   return (
