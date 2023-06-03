@@ -29,10 +29,11 @@ const CrearUsuarios = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(usuario),
-        });
+        }).then(res => res.ok? res.json() : console.log("no era aca el ok"))
+        .then(json => console.log("Este es el resultado " + json))
 
-        const result = response.json();
-        console.log("Success:", result);
+        // const result = response.json();
+        // console.log("Success:", result);
       } catch (error) {
         console.error("Error:", error);
       }
