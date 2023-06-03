@@ -25,7 +25,7 @@ const CrearUsuarios = () => {
 
       try {
 
-        await axios.post("http://localhost:4000/api/usuarios/", usuario)
+        await axios.post(process.env.REACT_APP_API_URL + "/api/usuarios/", usuario)
 
       } catch (error) {
         console.error("Error:", error);

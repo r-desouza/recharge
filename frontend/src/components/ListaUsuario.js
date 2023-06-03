@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
 const ListaUsuario = () => {
   const [lista, setLista] = useState([]);
 
@@ -10,8 +11,9 @@ const ListaUsuario = () => {
   },[]);
 
   const getUsuarios = async () => {
+    console.log(process.env.REACT_APP_API_URL + "/api/usuarios/")
 
-    axios.get("http://localhost:4000/api/usuarios/")
+    axios.get(process.env.REACT_APP_API_URL + "/api/usuarios/")
     .then(response => setLista(response.data))
     .catch(error => console.error("Error:", error))
 
@@ -19,7 +21,7 @@ const ListaUsuario = () => {
 
   const eliminarUsuario = async (id) => {
 
-    axios.delete("http://localhost:4000/api/usuarios/" + id)
+    axios.delete(process.env.REACT_APP_API_URL + "/api/usuarios/" + id)
     .then(response => console.log("Success: ", response.statusText))
     .catch(error => console.error("Error:", error))
 
