@@ -5,24 +5,24 @@ const ListaUsuario = () => {
   const [lista, setLista] = useState([]);
 
   useEffect(() => {
-    const getUsuarios = async () => {
-      try {
-        await fetch("http://localhost:4000/api/usuarios/", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => setLista(data));
-
-        console.log("aca se ejecuta una vez");
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
     getUsuarios();
-  }, []);
+  }, [lista]);
+
+  const getUsuarios = async () => {
+    try {
+      await fetch("http://localhost:4000/api/usuarios/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setLista(data));
+
+      console.log("aca se ejecuta una vez");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const eliminarUsuario = async (id) => {
     try {

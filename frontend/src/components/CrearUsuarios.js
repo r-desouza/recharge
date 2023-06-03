@@ -1,5 +1,5 @@
-//import { set } from "mongoose";
-import React, { useState } from "react";
+import { set } from "mongoose";
+import React, { useEffect, useState } from "react";
 
 const CrearUsuarios = () => {
   const valorInicial = {
@@ -12,6 +12,7 @@ const CrearUsuarios = () => {
 
   const [usuario, setUsuario] = useState(valorInicial);
 
+
   const capturarDatos = (e) => {
     const { name, value } = e.target;
     setUsuario((prev) => ({ ...prev, [name]: value }));
@@ -22,7 +23,7 @@ const CrearUsuarios = () => {
     e.preventDefault();
 
       try {
-        const response = await fetch("http://localhost:4000/api/usuarios", {
+        const response = await fetch("http://localhost:4000/api/usuarios/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -38,6 +39,7 @@ const CrearUsuarios = () => {
     
     setUsuario({ ...valorInicial });
   };
+
 
   return (
     <div className="col-md-6 offset-md-3">
@@ -113,6 +115,7 @@ const CrearUsuarios = () => {
             Guardar Usuario
           </button>
         </form>
+       
       </div>
     </div>
   );
