@@ -9,10 +9,10 @@ const NavegacionNew = () =>{
         <Container>
           <Navbar.Brand href="/">Recharge</Navbar.Brand>
           <Nav className="me-100">
-            <Nav.Link href="/">Send Recharge</Nav.Link>
-            <Nav.Link href="/">How to Recharge</Nav.Link>
+            <Nav.Link href="/SendRecharge">Send Recharge</Nav.Link>
+            <Nav.Link href="/HowToRecharge">How to Recharge</Nav.Link>
             <Nav.Link href="/SignUp">Sign Up</Nav.Link>
-            <Nav.Link href="/">Log In</Nav.Link>
+            <Nav.Link href="/LogIn">Log In</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
