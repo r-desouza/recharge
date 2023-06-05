@@ -8,4 +8,6 @@ body {
     color: white;
   }
 
-  
+  .container-fluid{
+    overflow: hidden;
+    }

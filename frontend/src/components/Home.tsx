@@ -27,7 +27,13 @@ const ListaUsuario = () => {
 
   };
 
-  return (
+  return (<>
+<div >
+      <h1 className="text-white text-center mb-3 mt-4">Home</h1>
+    </div>
+
+
+
     <div className="row">
       {lista.map((list) => (
         <div className="col-md-4 p-2" key={list._id}>
@@ -54,6 +60,7 @@ const ListaUsuario = () => {
         </div>
       ))}
     </div>
+    </>
   );
 };
 

@@ -22,7 +22,7 @@ const LogIn = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="ingresar el nombre del usuario"
+              placeholder=""
               required
               name="nombre"
               value={usuario.nombre}
@@ -34,7 +34,7 @@ const LogIn = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="ingresar el apellido del usuario"
+              placeholder=""
               required
               name="apellido"
               value={usuario.apellido}
@@ -46,7 +46,7 @@ const LogIn = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="ingresa tu correo"
+              placeholder=""
               required
               name="correo"
               value={usuario.correo}

@@ -6,6 +6,8 @@ const CrearUsuarios = () => {
     nombre: "",
     apellido: "",
     correo: "",
+    password: "",
+    passwordConfirmation: ""
   };
 
   const [usuario, setUsuario] = useState(valorInicial);
@@ -37,11 +39,11 @@ const CrearUsuarios = () => {
         <form onSubmit={guardarDatos}>
           <h2 className="text-center mb-3">Welcome!</h2>
           <div className="mb-3">
-            <label>Nombre</label>
+            <label>Name</label>
             <input
               type="text"
               className="form-control"
-              placeholder="ingresar el nombre del usuario"
+              placeholder=""
               required
               name="nombre"
               value={usuario.nombre}
@@ -50,11 +52,11 @@ const CrearUsuarios = () => {
           </div>
 
           <div className="mb-3">
-            <label>Apellido</label>
+            <label>Last Name</label>
             <input
               type="text"
               className="form-control"
-              placeholder="ingresar el apellido del usuario"
+              placeholder=""
               required
               name="apellido"
               value={usuario.apellido}
@@ -63,14 +65,40 @@ const CrearUsuarios = () => {
           </div>
 
           <div className="mb-3">
-            <label>Correo</label>
+            <label>Email</label>
             <input
               type="text"
               className="form-control"
-              placeholder="ingresa tu correo"
+              placeholder=""
               required
               name="correo"
               value={usuario.correo}
+              onChange={capturarDatos}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label>Password</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              required
+              name="password"
+              value={usuario.password}
+              onChange={capturarDatos}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label>Confirm Password</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              required
+              name="passwordConfirmation"
+              value={usuario.passwordConfirmation}
               onChange={capturarDatos}
             />
           </div>

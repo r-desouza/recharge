@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 const NavegacionNew = () =>{
     return(
 <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar className='sticky-top' bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="/">Recharge</Navbar.Brand>
           <Nav className="me-100">
