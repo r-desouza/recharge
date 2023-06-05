@@ -2,6 +2,7 @@ import { useState } from "react";
 import CrearUsuarios from "./components/CrearUsuarios";
 import Navegacion from "./components/Navegacion";
 import { Routes, Route } from "react-router-dom";
+import 'bootstrap/scss/bootstrap.scss';
 
 function App() {
   const [count, setCount] = useState(0);
