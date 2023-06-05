@@ -1,4 +1,3 @@
-import { set } from "mongoose";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -38,7 +37,7 @@ const CrearUsuarios = () => {
     <div className="col-md-6 offset-md-3">
       <div className="card card-body">
         <form onSubmit={guardarDatos}>
-          <h2 className="text-center mb-3">Registrarse</h2>
+          <h2 className="text-center mb-3">Welcome!</h2>
           <div className="mb-3">
             <label>Nombre</label>
             <input
@@ -105,7 +104,7 @@ const CrearUsuarios = () => {
           </div>
 
           <button className="btn btn-primary form-control">
-            Registrarse
+            Register
           </button>
         </form>
        

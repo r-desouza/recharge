@@ -1,23 +1,28 @@
 import { useState } from "react";
-import CrearUsuarios from "./components/CrearUsuarios";
+import SignUp from "./components/SignUp";
 import Navegacion from "./components/Navegacion";
 import { Routes, Route } from "react-router-dom";
+import NavegacionNew from './components/NavegacionNew';
+import ListaUsuario from './components/Home'
+import './App.css';
+import Footer from './components/Footer'
+
 import 'bootstrap/scss/bootstrap.scss';
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
-      // <div className="">
-      //   <Navegacion />
-      //   <div className="container p-4">
-      //     <Routes>
-      //       <Route path="/CrearUsuario" element={<CrearUsuarios />} />
-      //       <Route path="/edit/:id" element={<CrearUsuarios />} />
-      //     </Routes>
-      //   </div>
-      // </div>
-      <CrearUsuarios/>
+    <div className="">
+    <NavegacionNew/>
+    <div className="footer"><Footer/></div>
+    
+      <div className="container p-4">
+        <Routes>
+          <Route path="/SignUp" element={<SignUp/>} />
+          <Route path="/edit/:id" element={<SignUp/>} />
+        </Routes>
+      </div>
+  </div>
   );
 }
 
