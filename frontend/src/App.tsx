@@ -1,17 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import CrearUsuarios from './components/CrearUsuarios'
+import { useState } from "react";
+import CrearUsuarios from "./components/CrearUsuarios";
+import Navegacion from "./components/Navegacion";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
-    <>
+      // <div className="">
+      //   <Navegacion />
+      //   <div className="container p-4">
+      //     <Routes>
+      //       <Route path="/CrearUsuario" element={<CrearUsuarios />} />
+      //       <Route path="/edit/:id" element={<CrearUsuarios />} />
+      //     </Routes>
+      //   </div>
+      // </div>
       <CrearUsuarios/>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
