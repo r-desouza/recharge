@@ -1,9 +1,9 @@
 import { Card, Form, InputGroup, Button } from "react-bootstrap";
 import { all } from "mcc-mnc-list";
 
-const list = all();
-
 const SendRecharge = () => {
+  const list = all();
+
   const uniqueCountries = [
     ...new Set(list.map((option) => option.countryName)),
   ];
@@ -19,6 +19,15 @@ const SendRecharge = () => {
             <Form>
               <Form.Group className="mb-3" controlId="country">
                 <Form.Label>Country</Form.Label>
+                <Form.Select aria-label="Default select example">
+                  {uniqueCountries.map((country) => (
+                    <option key={country}>{country}</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="operator">
+                <Form.Label>Operator</Form.Label>
                 <Form.Select aria-label="Default select example">
                   {uniqueCountries.map((country) => (
                     <option key={country}>{country}</option>
