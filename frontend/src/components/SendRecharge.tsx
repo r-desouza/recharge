@@ -4,6 +4,10 @@ import { all } from "mcc-mnc-list";
 const list = all();
 
 const SendRecharge = () => {
+  const uniqueCountries = [
+    ...new Set(list.map((option) => option.countryName)),
+  ];
+
   return (
     <div>
       <div>
@@ -16,14 +20,9 @@ const SendRecharge = () => {
               <Form.Group className="mb-3" controlId="country">
                 <Form.Label>Country</Form.Label>
                 <Form.Select aria-label="Default select example">
-                  {list.map((option) => (
-                    <option key={option.countryName}>
-                      {option.countryName}
-                    </option>
+                  {uniqueCountries.map((country) => (
+                    <option key={country}>{country}</option>
                   ))}
-
-                  <option value="1">Argentina</option>
-                  <option value="2">Nigeria</option>
                 </Form.Select>
               </Form.Group>
 
