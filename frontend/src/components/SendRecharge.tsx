@@ -10,7 +10,7 @@ const SendRecharge = () => {
   uniqueCountries.sort();
 
   const [selectedCountry, setSelectedCountry] = useState();
-  const [uniqueBrand, setUniqueBrands] = useState([]);
+  const [uniqueOps, setUniqueOps] = useState([]);
 
   const setSelectedCountryHandler = (e) => {
     setSelectedCountry(e.target.value);
@@ -21,9 +21,9 @@ const SendRecharge = () => {
       statusCode: "Operational",
       countryCode: selectedCountry,
     });
-    const uniqueBrands = [...new Set(ops.map((option) => option.brand))];
-    uniqueBrands.sort();
-    setUniqueBrands(uniqueBrands);
+    const uniqueOperators = [...new Set(ops.map((option) => option.operator))];
+    uniqueOperators.sort();
+    setUniqueOps(uniqueOperators);
   }, [selectedCountry]);
 
   return (
@@ -43,7 +43,7 @@ const SendRecharge = () => {
                   onChange={setSelectedCountryHandler}
                 >
                   {uniqueCountries.map((country) => (
-                    <option key={country}>{filter({countryCode: country})}</option>
+                    <option key={country}>{country}</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -51,7 +51,7 @@ const SendRecharge = () => {
               <Form.Group className="mb-3" controlId="operator">
                 <Form.Label>Operator</Form.Label>
                 <Form.Select aria-label="Default select example" placeholder="">
-                  {uniqueBrand.map((operator) => (
+                  {uniqueOps.map((operator) => (
                     <option key={operator}>{operator}</option>
                   ))}
                 </Form.Select>
