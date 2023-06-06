@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 const LogIn = () => {
   const valorInicial = {
     nombre: "",
+    correo: "",
     password: "",
   };
 
@@ -35,7 +36,7 @@ const LogIn = () => {
               placeholder=""
               required
               name="apellido"
-              value={usuario.apellido}
+              value={usuario.password}
             />
           </div>
 
