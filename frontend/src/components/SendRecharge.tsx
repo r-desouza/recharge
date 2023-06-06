@@ -1,4 +1,4 @@
-import { Card, Form, InputGroup } from "react-bootstrap";
+import { Card, Form, InputGroup, Button } from "react-bootstrap";
 
 const SendRecharge = () => {
   return (
@@ -30,6 +30,10 @@ const SendRecharge = () => {
                   <Form.Control aria-label="Dollar amount (with dot and two decimal places)" />
                 </InputGroup>
               </Form.Group>
+
+              <Button variant="primary" type="submit">
+                Recharge Now
+              </Button>
             </Form>
           </Card.Body>
         </Card>
