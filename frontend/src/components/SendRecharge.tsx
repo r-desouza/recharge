@@ -1,12 +1,30 @@
 import { Card, Form, InputGroup, Button } from "react-bootstrap";
-import { all } from "mcc-mnc-list";
+import { all, filter } from "mcc-mnc-list";
+import { useState, useEffect } from "react";
 
 const SendRecharge = () => {
   const list = all();
-
   const uniqueCountries = [
-    ...new Set(list.map((option) => option.countryName)),
+    ...new Set(list.map((option) => option.countryCode)),
   ];
+  uniqueCountries.sort();
+
+  const [selectedCountry, setSelectedCountry] = useState();
+  const [uniqueBrand, setUniqueBrands] = useState([]);
+
+  const setSelectedCountryHandler = (e) => {
+    setSelectedCountry(e.target.value);
+  };
+
+  useEffect(() => {
+    const ops = filter({
+      statusCode: "Operational",
+      countryCode: selectedCountry,
+    });
+    const uniqueBrands = [...new Set(ops.map((option) => option.brand))];
+    uniqueBrands.sort();
+    setUniqueBrands(uniqueBrands);
+  }, [selectedCountry]);
 
   return (
     <div>
@@ -19,18 +37,22 @@ const SendRecharge = () => {
             <Form>
               <Form.Group className="mb-3" controlId="country">
                 <Form.Label>Country</Form.Label>
-                <Form.Select aria-label="Default select example">
+                <Form.Select
+                  aria-label="Default select example"
+                  value={selectedCountry}
+                  onChange={setSelectedCountryHandler}
+                >
                   {uniqueCountries.map((country) => (
-                    <option key={country}>{country}</option>
+                    <option key={country}>{filter({countryCode: country})}</option>
                   ))}
                 </Form.Select>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="operator">
                 <Form.Label>Operator</Form.Label>
-                <Form.Select aria-label="Default select example">
-                  {uniqueCountries.map((country) => (
-                    <option key={country}>{country}</option>
+                <Form.Select aria-label="Default select example" placeholder="">
+                  {uniqueBrand.map((operator) => (
+                    <option key={operator}>{operator}</option>
                   ))}
                 </Form.Select>
               </Form.Group>
