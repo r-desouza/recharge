@@ -4,27 +4,32 @@ import { useState, useEffect } from "react";
 
 const SendRecharge = () => {
   const list = all();
-  const uniqueCountries = [
-    ...new Set(list.map((option) => option.countryCode)),
-  ];
+
+  const uniqueCountries2 = new Map(list.map(pais => [pais.countryName ,pais.mcc]))
+
+  const uniqueCountries = [...uniqueCountries2];
+
   uniqueCountries.sort();
 
-  const [selectedCountry, setSelectedCountry] = useState();
+  const [selectedCountry, setSelectedCountry] = useState([]);
   const [uniqueOps, setUniqueOps] = useState([]);
 
   const setSelectedCountryHandler = (e) => {
+    //console.log(e.target.value)
     setSelectedCountry(e.target.value);
   };
 
   useEffect(() => {
+    console.log(selectedCountry)
     const ops = filter({
       statusCode: "Operational",
-      countryCode: selectedCountry,
+      mcc: selectedCountry[1],
     });
-    const uniqueOperators = [...new Set(ops.map((option) => option.operator))];
+    const uniqueOperators = [...new Set(ops.map((option) => option.brand))];
     uniqueOperators.sort();
     setUniqueOps(uniqueOperators);
   }, [selectedCountry]);
+
 
   return (
     <div>
@@ -43,7 +48,7 @@ const SendRecharge = () => {
                   onChange={setSelectedCountryHandler}
                 >
                   {uniqueCountries.map((country) => (
-                    <option key={country}>{country}</option>
+                    <option key={country[1]} value={country}>{country[0]}</option>
                   ))}
                 </Form.Select>
               </Form.Group>
