@@ -2,32 +2,48 @@ import { Card, Form, InputGroup, Button } from "react-bootstrap";
 import { all, filter } from "mcc-mnc-list";
 import { useState, useEffect } from "react";
 
+
+//PENDIENTE: MANEJAS LOS NULL DE ALGUNA FORMA
+
 const SendRecharge = () => {
   const list = all();
 
-  const uniqueCountries2 = new Map(list.map(pais => [pais.countryName ,pais.mcc]))
+  const uniqueCountries2 = new Map(list.map(pais => [pais.countryName ,pais.countryCode]))
 
   const uniqueCountries = [...uniqueCountries2];
 
   uniqueCountries.sort();
 
-  const [selectedCountry, setSelectedCountry] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
   const [uniqueOps, setUniqueOps] = useState([]);
 
   const setSelectedCountryHandler = (e) => {
-    //console.log(e.target.value)
-    setSelectedCountry(e.target.value);
+
+    const [key, value] = e.target.value.split(',')
+
+    setSelectedCountry({ [key]: value });
+
+  };
+
+  const setSelectedBrandHandler = (e) => {
+
+    setSelectedBrand(e.target.value);
+
   };
 
   useEffect(() => {
-    console.log(selectedCountry)
+    console.log(Object.values(selectedCountry)[0])
     const ops = filter({
       statusCode: "Operational",
-      mcc: selectedCountry[1],
+      countryCode: Object.values(selectedCountry)[0],
     });
+    if(Object.values(selectedCountry)[0] !== undefined){
     const uniqueOperators = [...new Set(ops.map((option) => option.brand))];
     uniqueOperators.sort();
     setUniqueOps(uniqueOperators);
+    }
+
   }, [selectedCountry]);
 
 
@@ -44,7 +60,7 @@ const SendRecharge = () => {
                 <Form.Label>Country</Form.Label>
                 <Form.Select
                   aria-label="Default select example"
-                  value={selectedCountry}
+                  value={selectedCountry[0]}
                   onChange={setSelectedCountryHandler}
                 >
                   {uniqueCountries.map((country) => (
@@ -55,7 +71,10 @@ const SendRecharge = () => {
 
               <Form.Group className="mb-3" controlId="operator">
                 <Form.Label>Operator</Form.Label>
-                <Form.Select aria-label="Default select example" placeholder="">
+                <Form.Select 
+                aria-label="Default select example" 
+                value={selectedBrand}
+                onChange={setSelectedBrandHandler}>
                   {uniqueOps.map((operator) => (
                     <option key={operator}>{operator}</option>
                   ))}
@@ -75,7 +94,7 @@ const SendRecharge = () => {
                 </InputGroup>
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" className='col-md-12 text-center'>
                 Recharge Now
               </Button>
             </Form>
