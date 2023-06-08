@@ -2,13 +2,6 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 
 const LogIn = () => {
-  const valorInicial = {
-    nombre: "",
-    correo: "",
-    password: "",
-  };
-
-  const [usuario, setUsuario] = useState(valorInicial);
 
   return (
     <div className="col-md-4 offset-md-4">
@@ -24,7 +17,6 @@ const LogIn = () => {
               placeholder=""
               required
               name="correo"
-              value={usuario.correo}
             />
           </div>
 
@@ -36,7 +28,6 @@ const LogIn = () => {
               placeholder=""
               required
               name="apellido"
-              value={usuario.password}
             />
           </div>
 
