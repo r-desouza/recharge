@@ -4,11 +4,11 @@ import {useNavigate} from 'react-router-dom'
 
 const CrearUsuarios = () => {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const {createUser} = UserAuth()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const {createUser}  = UserAuth();
+  const navigate = useNavigate();
 
 const handleSubmit = async (e) =>{
 
@@ -16,7 +16,7 @@ const handleSubmit = async (e) =>{
 
   try{
     await createUser(email,password);
-    navigate('/SendRecharge')
+    navigate('/Account')
   }catch(e){
     console.log(e.message)
   }

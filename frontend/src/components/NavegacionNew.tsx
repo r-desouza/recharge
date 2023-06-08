@@ -13,6 +13,7 @@ const NavegacionNew = () =>{
             <Nav.Link href="/HowToRecharge">How to Recharge</Nav.Link>
             <Nav.Link href="/SignUp">Sign Up</Nav.Link>
             <Nav.Link href="/LogIn">Log In</Nav.Link>
+            <Nav.Link href="/Account">Account</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

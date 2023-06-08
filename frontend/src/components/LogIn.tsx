@@ -1,12 +1,30 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const LogIn = () => {
+
+  const {signIn} = UserAuth()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    try {
+      console.log(email + " " + password)
+      await signIn(email,password)
+      navigate('/account')
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
 
   return (
     <div className="col-md-4 offset-md-4">
       <div className="card card-body">
-        <form>
+        <form onSubmit={handleSubmit}>
           <h2 className="text-center mb-3">Welcome back!</h2>
 
           <div className="mb-3">
@@ -17,17 +35,19 @@ const LogIn = () => {
               placeholder=""
               required
               name="correo"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div className="mb-3">
             <label>Password</label>
             <input
-              type="text"
+              type="password"
               className="form-control"
               placeholder=""
               required
-              name="apellido"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
