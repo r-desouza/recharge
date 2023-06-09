@@ -6,6 +6,7 @@ import { UserAuth } from "../context/AuthContext";
 const LogIn = () => {
 
   const {signIn} = UserAuth()
+  const {signInWithGoogle} = UserAuth()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -15,6 +16,17 @@ const LogIn = () => {
     try {
       console.log(email + " " + password)
       await signIn(email,password)
+      navigate('/account')
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
+  const handleSubmit2 = async (e) =>{
+    e.preventDefault();
+    try {
+      console.log("mori")
+      await signInWithGoogle()
       navigate('/account')
     } catch (e) {
       console.log(e.message)
@@ -56,6 +68,9 @@ const LogIn = () => {
           </Form.Group>
           <button className="btn btn-primary form-control">Log in</button>
         </form>
+        <div>
+        <button  onClick={handleSubmit2} className="btn btn-primary form-control mt-3">You can also log in with google! (cap)</button>
+        </div>
       </div>
     </div>
   );
