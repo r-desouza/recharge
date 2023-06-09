@@ -25,9 +25,7 @@ const LogIn = () => {
   const handleSubmit2 = async (e) =>{
     e.preventDefault();
     try {
-      console.log("mori")
       await signInWithGoogle()
-      navigate('/account')
     } catch (e) {
       console.log(e.message)
     }

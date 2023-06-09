@@ -45,13 +45,14 @@ useEffect(() => {
         signInWithPopup(auth, provider).then((result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
-            const user = result.user;
+            setUser(result.user);
+            window.location.href = '/account';
 
     }).catch ((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode + " " + errorMessage);
-    })}
+    }) }
 
     return(
         <UserContext.Provider value={{ createUser, user, signIn, logout, signInWithGoogle }}>
