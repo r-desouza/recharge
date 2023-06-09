@@ -2,34 +2,40 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { GoogleButton } from "react-google-button";
 
 const LogIn = () => {
-
-  const {signIn} = UserAuth()
-  const {signInWithGoogle} = UserAuth()
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { user } = UserAuth();
+  const { signIn } = UserAuth();
+  const { signInWithGoogle } = UserAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(email + " " + password)
-      await signIn(email,password)
-      navigate('/account')
+      console.log(email + " " + password);
+      await signIn(email, password);
     } catch (e) {
-      console.log(e.message)
+      console.log(e.message);
     }
-  }
+  };
 
-  const handleSubmit2 = async (e) =>{
+  const handleSubmit2 = async (e) => {
     e.preventDefault();
     try {
-      await signInWithGoogle()
+      await signInWithGoogle();
     } catch (e) {
-      console.log(e.message)
+      console.log(e.message);
     }
-  }
+  };
+
+  useEffect(() => {
+    if (user != null) {
+      navigate("/Account");
+    }
+  }, [user]);
 
   return (
     <div className="col-md-4 offset-md-4">
@@ -66,8 +72,9 @@ const LogIn = () => {
           </Form.Group>
           <button className="btn btn-primary form-control">Log in</button>
         </form>
+        <hr className="hr hr-blurry" />
         <div>
-        <button  onClick={handleSubmit2} className="btn btn-primary form-control mt-3">You can also log in with google! (cap)</button>
+          <GoogleButton  className="mx-auto mt-3" onClick={handleSubmit2}  />
         </div>
       </div>
     </div>

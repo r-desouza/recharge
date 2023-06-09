@@ -2,7 +2,8 @@ html,
 body {
   height: 100%;
   background-image: linear-gradient(
-    to right top,
+    180deg, rgba(201, 6, 126, 0.116) 95%, rgb(199, 199, 199)
+    /* to right top,
     #d16ba5,
     #c777b9,
     #ba83ca,
@@ -14,7 +15,7 @@ body {
     #52cffe,
     #41dfff,
     #46eefa,
-    #5ffbf1
+    #5ffbf1 */
   );
 }
 
