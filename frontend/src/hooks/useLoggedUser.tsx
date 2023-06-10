@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import {onAuthStateChanged} from 'firebase/auth';
-import { auth } from "../firebase";
+import { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
 
 const useLoggedUser = () => {
   const [userLoggeado, setUserLoggeado] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth,(authUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+
       if (authUser) {
         setUserLoggeado(authUser);
       } else {
@@ -16,8 +15,12 @@ const useLoggedUser = () => {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
+ 
 
   return userLoggeado;
 };
