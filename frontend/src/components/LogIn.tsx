@@ -3,21 +3,22 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { GoogleButton } from "react-google-button";
+import useLoggedUser from "../hooks/useLoggedUser";
 
 const LogIn = () => {
-  const { user } = UserAuth();
+  const userLoggeado = useLoggedUser();
   const { signIn } = UserAuth();
   const { signInWithGoogle } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       console.log(email + " " + password);
       await signIn(email, password);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
   };
@@ -32,10 +33,11 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    if (user != null) {
+    console.log(userLoggeado)
+    if (userLoggeado != null) {
       navigate("/Account");
     }
-  }, [user]);
+  }, [userLoggeado]);
 
   return (
     <div className="col-md-4 offset-md-4">

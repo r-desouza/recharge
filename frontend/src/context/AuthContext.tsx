@@ -13,7 +13,7 @@ import { auth } from "../firebase";
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const provider = new GoogleAuthProvider();
 
   const createUser = (email, password) => {
@@ -24,15 +24,15 @@ export const AuthContextProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  useEffect(() => {
-    const unsuscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("QUE CARAJO TENGO ACA" + currentUser);
-      setUser(currentUser);
-    });
-    return () => {
-      unsuscribe();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const unsuscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     console.log("QUE CARAJO TENGO ACA" + currentUser);
+  //     setUser(currentUser);
+  //   });
+  //   return () => {
+  //     unsuscribe();
+  //   };
+  // }, []);
 
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -48,7 +48,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ createUser, user, signIn, logout, signInWithGoogle }}
+      value={{ createUser, signIn, logout, signInWithGoogle }}
     >
       {children}
     </UserContext.Provider>
