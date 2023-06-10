@@ -1,37 +1,52 @@
-import React from 'react'
-import {UserAuth} from '../context/AuthContext'
-import { useNavigate} from 'react-router-dom'
-import { useEffect } from "react";
+import React from "react";
+import { UserAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BeatLoader } from "react-spinners";
 
 export const Account = (props) => {
+  const [loading, setLoading] = useState(false);
+  const { user, logout } = UserAuth();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log(props.user)
-        if (props.user == null) {
-          navigate("/LogIn");
-        }
-      }, []);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      if (props.user == null) {
+        navigate("/LogIn");
+      }
+    }, 400);
+  }, []);
 
-    const {user, logout } = UserAuth();
-    const navigate = useNavigate()
-
-    const handleLogout = async () => {
-        try{
-            await logout()
-            navigate('/')
-        }catch (e){
-            console.log(e.message)
-        }
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (e) {
+      console.log(e.message);
     }
+  };
 
   return (
-    props.user != null && 
     <div>
-        <h2>Account</h2>
-        <p>UserEmail: {props.user && props.user.email} </p>
-        <button onClick={handleLogout}>LOGOUT</button>
+      {loading ? (
+        <BeatLoader
+          color={"#123abc"}
+          loading={loading}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <>
+          <h2>Account</h2>
+          <p>UserEmail: {props.user && props.user.email} </p>
+          <button onClick={handleLogout}>LOGOUT</button>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Account
+export default Account;
