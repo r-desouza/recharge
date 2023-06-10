@@ -6,8 +6,8 @@ import { BeatLoader } from "react-spinners";
 
 export const Account = (props) => {
   const [loading, setLoading] = useState(false);
-  const { user, logout } = UserAuth();
   const navigate = useNavigate();
+  const { logout } = UserAuth();
 
   useEffect(() => {
     setLoading(true);

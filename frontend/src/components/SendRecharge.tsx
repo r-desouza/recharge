@@ -8,11 +8,12 @@ import { UserAuth } from "../context/AuthContext";
 
 //PENDIENTE: MANEJAS LOS NULL DE ALGUNA FORMA
 
-const SendRecharge = () => {
+const SendRecharge = (props) => {
   const list = all();
   const uniqueCountries2 = new Map(list.map(pais => [pais.countryName ,pais.countryCode]))
   const uniqueCountries = [...uniqueCountries2];
-  const { user } = UserAuth();
+  const user = props.user;
+  console.log(user)
   let coCode = ' ';
   uniqueCountries.sort();
 
@@ -53,7 +54,6 @@ const SendRecharge = () => {
     e.preventDefault();
     console.log(selectedBrand)
     try{ 
-
       const recarga = {
         companiaRecarga: selectedBrand,
         date: Date.now(),

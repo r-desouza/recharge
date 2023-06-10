@@ -29,7 +29,7 @@ function App() {
             <Route path="/LogIn" element={<LogIn />} />
             <Route path="/Account" element={<Account user={userLoggeado} />} />
             <Route path="/HowToRecharge" element={<HowToRecharge />} />
-            <Route path="/SendRecharge" element={<SendRecharge />} />
+            <Route path="/SendRecharge" element={<SendRecharge user={userLoggeado}/>} />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/edit/:id" element={<SignUp />} />
           </Routes>
