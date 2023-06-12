@@ -1,4 +1,3 @@
-import React from "react";
 import { Nav } from "react-bootstrap";
 
 export const AdminDashboard = () => {
@@ -51,7 +50,7 @@ export const AdminDashboard = () => {
             <th scope="col">phone number</th>
             <th scope="col">amount</th>
             <th scope="col">timestamp</th>
-            <th scope="col">state</th>
+            <th scope="col">status</th>
           </tr>
         </thead>
         <tbody>
@@ -62,7 +61,7 @@ export const AdminDashboard = () => {
             <td>+244 03541350802</td>
             <td>10</td>
             <td>1686326809710</td>
-            <td>Pendiente</td>
+            <td>Pending</td>
           </tr>
           <tr>
             <th scope="row">2</th> <td>Jacob</td> <td>Thornton</td>
