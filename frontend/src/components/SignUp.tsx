@@ -7,18 +7,31 @@ const CrearUsuarios = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
 
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
   e.preventDefault()
-
-  try{
-    await authServiceInstance.createUser(email,password);
-    navigate('/Account')
-  }catch(e: any){
-    console.log(e.message)
+  if (password === confirmPassword) {
+    try{
+      await authServiceInstance.createUser(email,password)
+      navigate('/Account')
+    }catch(e: any){
+      alert(e.message)
+    }
+  } else {
+    setPasswordMatch(false);
+    alert("Passwords do not match")
   }
 }
+
+const handlePasswordChange = (e) => {
+  setPassword(e.target.value);
+};
+
+const handleConfirmPasswordChange = (e) => {
+  setConfirmPassword(e.target.value);
+};
 
   return (
     <div className="col-md-4 offset-md-4">
@@ -46,10 +59,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
               placeholder=""
               required
               name="password"
-              onChange={(e) => setPassword(e.target.value)} 
+              onChange={handlePasswordChange} 
             />
           </div>
-
+          {!passwordMatch && <p>Passwords do not match.</p>}
           <div className="mb-3">
             <label>Confirm Password</label>
             <input
@@ -58,7 +71,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
               placeholder=""
               required
               name="passwordConfirmation"
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={handleConfirmPasswordChange}
             />
           </div>
 
