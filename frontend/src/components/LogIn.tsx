@@ -70,11 +70,8 @@ const LogIn = (props: LoginProps) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Remember me" />
-          </Form.Group>
-          <button className="btn btn-primary form-control">Log in</button>
+          <div className="mb-3"><button className="btn btn-primary form-control">Log in</button></div>
+          
         </form>
 
         <p style={{ textAlign: 'center', color: 'black'}}>

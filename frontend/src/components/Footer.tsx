@@ -1,6 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt, faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { faPaypal, faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 export const Footer = () => {
@@ -9,7 +8,7 @@ export const Footer = () => {
       <Container>
         <Row>
           <Col className="text-center py-3">
-            <h5>Pay With</h5>
+            <h5 style={{ color: "#9ba6a5" }}>Pay With</h5>
             <ul className="list-unstyled d-flex justify-content-center mb-0">
               
               <li className="me-3">
@@ -19,36 +18,36 @@ export const Footer = () => {
             </ul>
           </Col>
           <Col md={4}>
-            <h5>About Us</h5>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              cursus justo id ligula tristique, at bibendum magna tempor.
+            <h5 style={{ color: "#9ba6a5" }}>About Us</h5>
+            <p style={{ color: "#f5f9ee" }}>
+            At Recharge Mobile, we are committed to providing convenient and hassle-free mobile recharge services. 
+            Our user-friendly platform allows you to recharge your mobile phone anytime, anywhere. 
             </p>
           </Col>
           <Col md={4}>
-            <h5>Follow Us</h5>
+          <h5 style={{ color: "#9ba6a5" }}>Follow Us</h5>
             <ul className="list-unstyled d-flex justify-content-start">
-              <li className="me-3">
-                <a href="#">
-                  <FontAwesomeIcon icon={faFacebookF} />
-                </a>
-              </li>
-              <li className="me-3">
-                <a href="#">
-                  <FontAwesomeIcon icon={faTwitter} />
-                </a>
-              </li>
-              <li className="me-3">
-                <a href="#">
-                  <FontAwesomeIcon icon={faInstagram} />
-                </a>
-              </li>
-            </ul>
-          </Col>
+            <li className="me-3">
+              <a href="#" style={{ margin: "0 0.5rem" }}>
+                <FontAwesomeIcon icon={faFacebookF} style={{ transform: "scale(1.8)" }} />
+              </a>
+            </li>
+            <li className="me-3">
+              <a href="#" style={{ margin: "0 0.5rem" }}>
+                <FontAwesomeIcon icon={faTwitter} style={{ transform: "scale(1.8)" }} />
+              </a>
+            </li>
+            <li className="me-3">
+              <a href="#" style={{ margin: "0 0.5rem" }}>
+                <FontAwesomeIcon icon={faInstagram} style={{ transform: "scale(1.8)" }} />
+              </a>
+            </li>
+          </ul>
+        </Col>
         </Row>
         <hr className="mt-4" />
         <Row>
-          <Col className="text-center">
+          <Col className="text-center" style={{ color: "#9ba6a5" }}>
             <p>&copy; 2023 Company. All rights reserved.</p>
           </Col>
         </Row>

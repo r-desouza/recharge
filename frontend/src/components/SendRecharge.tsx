@@ -133,7 +133,7 @@ const SendRecharge = (props: SendRechargeProps) => {
 
               <Form.Label>Phone Number</Form.Label>
               <Form.Group className="mb-3 me-3 d-flex" controlId="phoneNumber">
-                <InputGroup.Text style={{maxWidth: '64px'}}>+{selectedPrefix}</InputGroup.Text>
+                <InputGroup.Text style={{maxWidth: '96px'}}>+{selectedPrefix}</InputGroup.Text>
                 <Form.Control onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="Enter phone number" />
               </Form.Group>
 
