@@ -48,12 +48,6 @@ const SendRecharge = (props: SendRechargeProps) => {
     console.log("Selected brand:" + e.target.value)
     setSelectedBrand(e.target.value);
   };
-  console.log("SELECTED COUNTRY:" + selectedCountry)
-  console.log("SELECTED BRAND:" + selectedBrand)
-  console.log("SELECTED AMOUNT:" + amount)
-  console.log("SELECTED PHONE:" + phone)
-  console.log("SELECTED PREFIX:" + selectedPrefix)
-  console.log("UID:" + uid)
 
   useEffect(() => {
     coCode = Object.values(selectedCountry)[0];
@@ -73,13 +67,6 @@ const SendRecharge = (props: SendRechargeProps) => {
   // SUBIR RECARGA A LA DB
 
   const submitRecharge = async (data: RechargeData) => {
-    console.log("SELECTED COUNTRY:" + data.selectedCountry)
-    console.log("SELECTED BRAND:" + data.selectedBrand)
-    console.log("SELECTED AMOUNT:" + data.amount)
-    console.log("SELECTED PHONE:" + data.phone)
-    console.log("SELECTED PREFIX:" + data.selectedPrefix)
-    console.log("UID:" + uid)
-
     try{ 
       const recarga = {
         companiaRecarga: data.selectedBrand,
@@ -158,23 +145,12 @@ const SendRecharge = (props: SendRechargeProps) => {
               }}
 
               createOrder={(data, actions) => {
-
-                console.log("SELECTED COUNTRY:" + selectedCountry)
-                console.log("SELECTED BRAND:" + selectedBrand)
-                console.log("SELECTED AMOUNT:" + amount)
-                console.log("SELECTED PHONE:" + phone)
-                console.log("SELECTED PREFIX:" + selectedPrefix)
-                console.log("UID:" + uid)
-            
-
-
-
                 return actions.order.create({
                   purchase_units: [
                     {
                       description: 'recharge',
                       amount: {
-                        value: "1.99",
+                        value: amount,
                       },
                     },
                   ],
@@ -186,6 +162,8 @@ const SendRecharge = (props: SendRechargeProps) => {
                // Call 'submitRecharge' function after capturing the order
                 await submitRecharge( { selectedCountry, selectedBrand, amount, selectedPrefix, phone })
               }}
+
+              forceReRender={[selectedCountry, selectedBrand, amount, phone, selectedPrefix]}
               
               onError={(err) =>{
                 console.error("Paypal  Checkout onERROR", err)
