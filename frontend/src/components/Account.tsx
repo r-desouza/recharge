@@ -35,7 +35,7 @@ export const Account = (props: AccountProps) => {
   return (
     <div>
       {loading ? (
-        <BeatLoader
+        <BeatLoader 
           color={"#123abc"}
           loading={loading}
           size={50}

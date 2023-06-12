@@ -6,6 +6,9 @@ import { collection, addDoc} from 'firebase/firestore'
 import { db } from '../firebase'
 import { PayPalButtons } from '@paypal/react-paypal-js'
 import { User } from "firebase/auth";
+import { InputMask } from 'primereact/inputmask';
+
+
 
 //PENDIENTE: MANEJAS LOS NULL DE ALGUNA FORMA
 
@@ -45,14 +48,18 @@ const SendRecharge = (props: SendRechargeProps) => {
 
   const setSelectedCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const [key, value] = e.target.value.split(',')
-    console.log("Selected country:" + { [key]: value })
-    setSelectedCountry((prev) => ({...prev, [key]: value}));
+    setSelectedCountry(() => ({ [key]: value}));
   };
 
   const setSelectedBrandHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Selected brand:" + e.target.value)
     setSelectedBrand(e.target.value);
   };
+
+  const setAmountHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+    setAmount(e.target.value);
+  }
 
   useEffect(() => {
     const coCode = Object.values(selectedCountry)[0];
@@ -138,7 +145,14 @@ const SendRecharge = (props: SendRechargeProps) => {
                 <Form.Label>Amount</Form.Label>
                 <InputGroup className="mb-3">
                   <InputGroup.Text>$</InputGroup.Text>
-                  <Form.Control onChange={(e) => setAmount(e.target.value)} aria-label="Dollar amount (with dot and two decimal places)" />
+                  <InputMask
+                    mask="99.99"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="form-control"
+                    slotChar="00"
+                    aria-label="Dollar amount (with dot and two decimal places)"
+                  />
                 </InputGroup>
               </Form.Group>
 

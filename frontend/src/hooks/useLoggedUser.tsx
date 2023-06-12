@@ -15,7 +15,6 @@ const useLoggedUser = () => {
       } else {
         setUserLoggeado(null);
         setLoading(false);
-        console.log("ENTRO AL ELSE V:")
       }
     });
 
@@ -23,8 +22,6 @@ const useLoggedUser = () => {
       unsubscribe();
     };
   }, []);
-
- 
 
   return { userLoggeado, loading };
 };
