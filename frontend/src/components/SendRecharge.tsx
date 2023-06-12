@@ -4,18 +4,32 @@ import { useState, useEffect } from "react";
 import prefixData from "../prefix-phone.json"
 import { collection, addDoc} from 'firebase/firestore'
 import { db } from '../firebase'
-import { UserAuth } from "../context/AuthContext";
+import { PayPalButtons } from '@paypal/react-paypal-js'
+import useLoggedUser from "../hooks/useLoggedUser";
+import { User } from "firebase/auth";
 
 //PENDIENTE: MANEJAS LOS NULL DE ALGUNA FORMA
 
-const SendRecharge = (props) => {
+type SendRechargeProps = {
+  user: User;
+}
+
+type RechargeData = {
+  selectedCountry: string,
+  selectedBrand: string,
+  amount: string,
+  selectedPrefix: string,
+  phone: string,
+}
+
+const SendRecharge = (props: SendRechargeProps) => {
   const list = all();
   const uniqueCountries2 = new Map(list.map(pais => [pais.countryName ,pais.countryCode]))
   const uniqueCountries = [...uniqueCountries2];
-  const user = props.user;
-  console.log(user)
+  const uid = props.user.uid
   let coCode = ' ';
   uniqueCountries.sort();
+  
 
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -26,12 +40,20 @@ const SendRecharge = (props) => {
 
   const setSelectedCountryHandler = (e) => {
     const [key, value] = e.target.value.split(',')
+    console.log("Selected country:" + { [key]: value })
     setSelectedCountry({ [key]: value });
   };
 
   const setSelectedBrandHandler = (e) => {
+    console.log("Selected brand:" + e.target.value)
     setSelectedBrand(e.target.value);
   };
+  console.log("SELECTED COUNTRY:" + selectedCountry)
+  console.log("SELECTED BRAND:" + selectedBrand)
+  console.log("SELECTED AMOUNT:" + amount)
+  console.log("SELECTED PHONE:" + phone)
+  console.log("SELECTED PREFIX:" + selectedPrefix)
+  console.log("UID:" + uid)
 
   useEffect(() => {
     coCode = Object.values(selectedCountry)[0];
@@ -50,26 +72,31 @@ const SendRecharge = (props) => {
 
   // SUBIR RECARGA A LA DB
 
-  const submitRecharge = async (e) => {
-    e.preventDefault();
-    console.log(selectedBrand)
+  const submitRecharge = async (data: RechargeData) => {
+    console.log("SELECTED COUNTRY:" + data.selectedCountry)
+    console.log("SELECTED BRAND:" + data.selectedBrand)
+    console.log("SELECTED AMOUNT:" + data.amount)
+    console.log("SELECTED PHONE:" + data.phone)
+    console.log("SELECTED PREFIX:" + data.selectedPrefix)
+    console.log("UID:" + uid)
+
     try{ 
       const recarga = {
-        companiaRecarga: selectedBrand,
+        companiaRecarga: data.selectedBrand,
         date: Date.now(),
         estadoRecarga: "Pendiente",
-        idComprador: user.uid,
-        montoRecarga: amount,
-        numeroTelefono: '+' + selectedPrefix + ' '+ phone,
-        paisRecarga: Object.keys(selectedCountry)[0]
+        idComprador: uid,
+        montoRecarga: data.amount,
+        numeroTelefono: '+' + data.selectedPrefix + ' '+ data.phone,
+        paisRecarga: Object.keys(data.selectedCountry)[0]
       }
+
+      console.log("Final recharge objec666t:" + recarga);
 
       await addDoc( collection(db, 'recargas'), recarga)
 
-      console.log(recarga)
-
-    } catch (e) {
-      console.log(e.message)
+    } catch (e){
+      console.log(e)
     }
   }
 
@@ -81,7 +108,7 @@ const SendRecharge = (props) => {
             Recharge Mobiles Online
           </Card.Title>
           <Card.Body>
-            <Form onSubmit={submitRecharge}>
+            <Form>
               <Form.Group className="mb-3" controlId="country">
                 <Form.Label>Country</Form.Label>
                 <Form.Select
@@ -121,9 +148,49 @@ const SendRecharge = (props) => {
                 </InputGroup>
               </Form.Group>
 
-              <Button variant="primary" type="submit" className='col-md-12 text-center'>
-                Recharge Now
-              </Button>
+              <PayPalButtons style={{
+                color: "blue",
+                layout: "horizontal",
+                height: 48,
+                tagline: false,
+                shape: "pill",
+                label: "checkout"
+              }}
+
+              createOrder={(data, actions) => {
+
+                console.log("SELECTED COUNTRY:" + selectedCountry)
+                console.log("SELECTED BRAND:" + selectedBrand)
+                console.log("SELECTED AMOUNT:" + amount)
+                console.log("SELECTED PHONE:" + phone)
+                console.log("SELECTED PREFIX:" + selectedPrefix)
+                console.log("UID:" + uid)
+            
+
+
+
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      description: 'recharge',
+                      amount: {
+                        value: "1.99",
+                      },
+                    },
+                  ],
+                });
+              }}
+
+              onApprove={async (data, actions) => {
+                const order = await actions.order?.capture()
+               // Call 'submitRecharge' function after capturing the order
+                await submitRecharge( { selectedCountry, selectedBrand, amount, selectedPrefix, phone })
+              }}
+              
+              onError={(err) =>{
+                console.error("Paypal  Checkout onERROR", err)
+              }}
+              />
             </Form>
           </Card.Body>
         </Card>

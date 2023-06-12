@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { GoogleButton } from "react-google-button";
 import useLoggedUser from "../hooks/useLoggedUser";
+import { User } from "firebase/auth";
 
-const LogIn = () => {
-  const userLoggeado = useLoggedUser();
+type LoginProps = {
+  user: User;
+}
+
+const LogIn = (props: LoginProps) => {
   const { signIn } = UserAuth();
   const { signInWithGoogle } = UserAuth();
   const [email, setEmail] = useState("");
@@ -27,17 +31,17 @@ const LogIn = () => {
     e.preventDefault();
     try {
       await signInWithGoogle();
+      navigate("/Account")
     } catch (e) {
       console.log(e.message);
     }
   };
 
   useEffect(() => {
-    console.log(userLoggeado)
-    if (userLoggeado != null) {
+    if (props.user != null) {
       navigate("/Account");
     }
-  }, [userLoggeado]);
+  }, []);
 
   return (
     <div className="col-md-4 offset-md-4">

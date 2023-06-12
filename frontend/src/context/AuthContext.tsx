@@ -38,8 +38,8 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider).catch((error) => {
+  const signInWithGoogle = async () => {
+    await signInWithPopup(auth, provider).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode + " " + errorMessage);
