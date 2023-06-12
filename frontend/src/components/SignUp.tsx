@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
-import {UserAuth} from '../context/AuthContext'
 import {useNavigate} from 'react-router-dom'
+import authServiceInstance from "../service/AuthService";
 
 const CrearUsuarios = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const {createUser}  = UserAuth();
   const navigate = useNavigate();
 
-const handleSubmit = async (e) =>{
-
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
   e.preventDefault()
 
   try{
-    await createUser(email,password);
+    await authServiceInstance.createUser(email,password);
     navigate('/Account')
-  }catch(e){
+  }catch(e: any){
     console.log(e.message)
   }
-
 }
 
   return (

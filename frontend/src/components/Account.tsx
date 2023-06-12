@@ -1,13 +1,17 @@
-import React from "react";
-import { UserAuth } from "../context/AuthContext";
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
+import authServiceInstance from "../service/AuthService";
+import { User } from "firebase/auth";
 
-export const Account = (props) => {
+type AccountProps = {
+  user: User | null;
+}
+
+export const Account = (props: AccountProps) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { logout } = UserAuth();
 
   useEffect(() => {
     setLoading(true);
@@ -21,9 +25,9 @@ export const Account = (props) => {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await authServiceInstance.logout();
       navigate("/");
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
   };

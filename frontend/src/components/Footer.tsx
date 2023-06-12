@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import { Component, CSSProperties } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-const stickyFooterStyle = {
+const stickyFooterStyle: CSSProperties = {
   fontSize: "13px",
   color: "black",
   textAlign: "center",

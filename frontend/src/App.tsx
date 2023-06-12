@@ -5,11 +5,13 @@ import LogIn from "./components/LogIn";
 import HowToRecharge from "./components/HowToRecharge";
 import SendRecharge from "./components/SendRecharge";
 import Account from "./components/Account";
-import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import useLoggedUser from "./hooks/useLoggedUser";
 import BasicNavigation from "./components/BasicNavigation";
 import LoggedNavigation from "./components/LoggedNavigation";
 import {PayPalScriptProvider} from '@paypal/react-paypal-js'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 import "bootstrap/scss/bootstrap.scss";
 
@@ -18,7 +20,15 @@ function App() {
   const { userLoggeado, loading  }= useLoggedUser();
 
   if(loading) {
-    return <div>Loading...</div>
+    return <div>
+      <Navbar className='sticky-top' bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="/">Recharge</Navbar.Brand>
+          <Nav className="me-100">
+          </Nav>
+        </Container>
+      </Navbar>
+      </div>
   }
 
   return (
@@ -28,10 +38,9 @@ function App() {
         <Footer />
       </div>
       <div className="container p-4">
-        <AuthContextProvider>
         <PayPalScriptProvider options={{"client-id" : import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
           <Routes>
-            <Route path="/" element={<LogIn />} />
+            <Route path="/"  />
             <Route path="/LogIn" element={<LogIn user={userLoggeado}/>} />
             <Route path="/Account" element={<Account user={userLoggeado} />} />
             <Route path="/HowToRecharge" element={<HowToRecharge />} />
@@ -40,7 +49,6 @@ function App() {
             <Route path="/edit/:id" element={<SignUp />} />
           </Routes>
           </PayPalScriptProvider>
-        </AuthContextProvider>
       </div>
     </div>
   );

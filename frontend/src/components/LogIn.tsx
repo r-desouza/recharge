@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "../context/AuthContext";
-import { GoogleButton } from "react-google-button";
-import useLoggedUser from "../hooks/useLoggedUser";
+import GoogleButton from "react-google-button";
 import { User } from "firebase/auth";
+import authServiceInstance from "../service/AuthService";
 
 type LoginProps = {
-  user: User;
+  user: User | null;
 }
 
 const LogIn = (props: LoginProps) => {
-  const { signIn } = UserAuth();
-  const { signInWithGoogle } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: any) => {
+  const handleClassicLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       console.log(email + " " + password);
-      await signIn(email, password);
+      await authServiceInstance.signIn(email, password);
+      navigate("/Account")
     } catch (e: any) {
       console.log(e.message);
     }
   };
 
-  const handleSubmit2 = async (e) => {
+  const handleGoogleLogin = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     try {
-      await signInWithGoogle();
+      await authServiceInstance.signInWithGoogle();
       navigate("/Account")
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
   };
@@ -46,7 +44,7 @@ const LogIn = (props: LoginProps) => {
   return (
     <div className="col-md-4 offset-md-4">
       <div className="card card-body">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleClassicLogin}>
           <h2 className="text-center mb-3">Welcome back!</h2>
 
           <div className="mb-3">
@@ -80,7 +78,7 @@ const LogIn = (props: LoginProps) => {
         </form>
         <hr className="hr hr-blurry" />
         <div>
-          <GoogleButton  className="mx-auto mt-3" onClick={handleSubmit2}  />
+          <GoogleButton className="mx-auto mt-3" onClick={handleGoogleLogin}  />
         </div>
       </div>
     </div>
