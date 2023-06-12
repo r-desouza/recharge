@@ -45,13 +45,24 @@ export const AdminDashboard = () => {
         <caption className="text-white fs-4">Recent Orders</caption>
         <thead>
           <tr>
-            <th scope="col">#</th> <th scope="col">First</th>
-            <th scope="col">Last</th> <th scope="col">Handle</th>
+            <th scope="col">#</th>
+            <th scope="col">id buyer</th>
+            <th scope="col">brand</th>
+            <th scope="col">phone number</th>
+            <th scope="col">amount</th>
+            <th scope="col">timestamp</th>
+            <th scope="col">state</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th> <td>Mark</td> <td>Otto</td> <td>@mdo</td>
+            <th scope="row">1</th>
+            <td>mLh7p1Hrm8SCKaukkY9DBLiHXef2</td>
+            <td>Otto</td>
+            <td>+244 03541350802</td>
+            <td>10</td>
+            <td>1686326809710</td>
+            <td>Pendiente</td>
           </tr>
           <tr>
             <th scope="row">2</th> <td>Jacob</td> <td>Thornton</td>
