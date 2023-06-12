@@ -56,10 +56,6 @@ const SendRecharge = (props: SendRechargeProps) => {
     setSelectedBrand(e.target.value);
   };
 
-  const setAmountHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
-    setAmount(e.target.value);
-  }
 
   useEffect(() => {
     const coCode = Object.values(selectedCountry)[0];

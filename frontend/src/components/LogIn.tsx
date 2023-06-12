@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { User } from "firebase/auth";
 import authServiceInstance from "../service/AuthService";
+import { Link } from 'react-router-dom';
 
 type LoginProps = {
   user: User | null;
@@ -17,7 +18,6 @@ const LogIn = (props: LoginProps) => {
   const handleClassicLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(email + " " + password);
       await authServiceInstance.signIn(email, password);
       navigate("/Account")
     } catch (e: any) {
@@ -45,7 +45,7 @@ const LogIn = (props: LoginProps) => {
     <div className="col-md-4 offset-md-4">
       <div className="card card-body">
         <form onSubmit={handleClassicLogin}>
-          <h2 className="text-center mb-3">Welcome back!</h2>
+          <h2 className="text-center mb-3">We are glad to see you again!</h2>
 
           <div className="mb-3">
             <label>Email</label>
@@ -76,7 +76,12 @@ const LogIn = (props: LoginProps) => {
           </Form.Group>
           <button className="btn btn-primary form-control">Log in</button>
         </form>
+
+        <p style={{ textAlign: 'center', color: 'black'}}>
+            <Link to="/SignUp">Don't have an account yet? JOIN NOW →</Link>
+        </p>
         <hr className="hr hr-blurry" />
+
         <div>
           <GoogleButton className="mx-auto mt-3" onClick={handleGoogleLogin}  />
         </div>

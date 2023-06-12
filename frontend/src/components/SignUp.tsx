@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 import authServiceInstance from "../service/AuthService";
-
 const CrearUsuarios = () => {
 
   const [email, setEmail] = useState('');
@@ -25,19 +24,24 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
   }
 }
 
-const handlePasswordChange = (e) => {
-  setPassword(e.target.value);
+
+const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const value = e.currentTarget.value;
+  setPassword(value);
+  setPasswordMatch(value === confirmPassword);
 };
 
-const handleConfirmPasswordChange = (e) => {
-  setConfirmPassword(e.target.value);
+const handleConfirmPasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const value = e.currentTarget.value;
+  setConfirmPassword(value);
+  setPasswordMatch(value === password);
 };
 
   return (
     <div className="col-md-4 offset-md-4">
       <div className="card card-body">
         <form onSubmit={handleSubmit}>
-          <h2 className="text-center mb-3">Welcome!</h2>
+          <h2 className="text-center mb-3">Looks like you're new here!</h2>
 
           <div className="mb-3">
             <label>Email</label>
@@ -59,10 +63,10 @@ const handleConfirmPasswordChange = (e) => {
               placeholder=""
               required
               name="password"
-              onChange={handlePasswordChange} 
+              onInput={handlePasswordChange} 
             />
           </div>
-          {!passwordMatch && <p>Passwords do not match.</p>}
+          
           <div className="mb-3">
             <label>Confirm Password</label>
             <input
@@ -71,13 +75,19 @@ const handleConfirmPasswordChange = (e) => {
               placeholder=""
               required
               name="passwordConfirmation"
-              onChange={handleConfirmPasswordChange}
+              onInput={handleConfirmPasswordChange}
             />
           </div>
+          {!passwordMatch && <p style={{ color: 'red' }}>Passwords do not match.</p>}
 
-          <button className="btn btn-primary form-control">
+          <button type="submit" className="btn btn-primary form-control">
             Register
           </button>
+
+
+          <p style={{ textAlign: 'center', color: 'black'}}>
+            <Link to="/LogIn">Already have an account? Log in →</Link>
+        </p>
         </form>
        
       </div>
