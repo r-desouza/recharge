@@ -34,9 +34,6 @@ function App() {
   return (
     <div className="">
       {userLoggeado ? <LoggedNavigation /> : <BasicNavigation />}
-      <div>
-        <Footer />
-      </div>
       <div className="container p-4">
         <PayPalScriptProvider options={{"client-id" : import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
           <Routes>
@@ -48,7 +45,10 @@ function App() {
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/edit/:id" element={<SignUp />} />
           </Routes>
-          </PayPalScriptProvider>
+          </PayPalScriptProvider>       
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );

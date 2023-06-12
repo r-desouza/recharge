@@ -2,8 +2,10 @@ html,
 body {
   height: 100%;
   background-image: linear-gradient(
-    180deg, rgba(93, 240, 232, 0.815) 95%, rgb(199, 199, 199)
-    /* to right top,
+    75deg,
+    rgba(5, 7, 7, 0.815) 100%,
+    rgba(8, 8, 8, 0)
+      /* to right top,
     #d16ba5,
     #c777b9,
     #ba83ca,
@@ -17,10 +19,6 @@ body {
     #46eefa,
     #5ffbf1 */
   );
-}
-
-.white-hl {
-  color: white;
 }
 
 .container-fluid {
