@@ -21,6 +21,12 @@ body {
   );
 }
 
+.custom-container {
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .container-fluid {
   overflow: hidden;
 }
