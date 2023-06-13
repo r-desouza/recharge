@@ -6,7 +6,8 @@ import {
     GoogleAuthProvider,
   } from "firebase/auth";
 
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import {collection, getDoc, getDocs} from 'firebase/firestore'
 
 
 class AuthService{
@@ -29,6 +30,19 @@ class AuthService{
           const errorMessage = error.message;
           console.log(errorCode + " " + errorMessage);
         });
+    }
+
+    async verifyAdmin(id: string) : Promise<{admin: boolean}>{
+        const whitelistSnap = await getDocs(collection(db, 'whitelist'))
+        let admin = false;
+
+        whitelistSnap.forEach((doc) =>{
+            if(id === doc.id){
+                admin = true;
+            }
+        })
+
+        return {admin}
     }
 }
 

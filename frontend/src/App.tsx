@@ -18,7 +18,7 @@ import "bootstrap/scss/bootstrap.scss";
 
 import "./App.css";
 function App() {
-  const { userLoggeado, loading } = useLoggedUser();
+  const { userLoggeado, loading, isAdmin } = useLoggedUser();
 
   if (loading) {
     return (
@@ -42,6 +42,7 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<AdminDashboard />} />
+            <Route path="/AdminDashboard" element={<AdminDashboard />} />
             <Route path="/LogIn" element={<LogIn user={userLoggeado} />} />
             <Route path="/Account" element={<Account user={userLoggeado} />} />
             <Route path="/HowToRecharge" element={<HowToRecharge />} />
