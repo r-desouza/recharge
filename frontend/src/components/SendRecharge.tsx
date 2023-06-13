@@ -204,6 +204,11 @@ const SendRecharge = (props: SendRechargeProps) => {
                       ],
                     });
                   }}
+                  onClick={() => {
+                    if (Object.values(selectedCountry)[0] === undefined) {
+                      throw new Error("Invalid country");
+                    }
+                  }}
                   onApprove={async (data, actions) => {
                     const order = await actions.order?.capture();
                     const status = order?.status;
