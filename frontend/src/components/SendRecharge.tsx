@@ -71,7 +71,14 @@ const SendRecharge = (props: SendRechargeProps) => {
       countryCode: Object.values(selectedCountry)[0],
     });
     if (Object.values(selectedCountry)[0] !== undefined) {
-      const uniqueOperators = [...new Set(ops.map((option) => option.brand))];
+      // const uniqueOperators = [...new Set(ops.map((option) => option.brand))];
+      const uniqueOperators = [
+        ...new Set(
+          ops.map((option) =>
+            option.brand && option.brand !== "" ? option.brand : null
+          )
+        ),
+      ].filter((brand) => brand !== null);
       uniqueOperators.sort();
       setUniqueOps(uniqueOperators);
       setSelectedBrand(uniqueOperators[0]);
