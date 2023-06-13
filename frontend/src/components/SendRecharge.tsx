@@ -205,8 +205,11 @@ const SendRecharge = (props: SendRechargeProps) => {
                     });
                   }}
                   onClick={() => {
-                    if (Object.values(selectedCountry)[0] === undefined) {
-                      throw new Error("Invalid country");
+                    if (
+                      Object.values(selectedCountry)[0] === undefined ||
+                      amount == "00.00"
+                    ) {
+                      throw new Error("Invalid input");
                     }
                   }}
                   onApprove={async (data, actions) => {
