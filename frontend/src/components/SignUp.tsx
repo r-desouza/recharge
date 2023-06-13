@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate, Link} from 'react-router-dom'
+import { useNavigate, Link } from "react-router-dom";
 import authServiceInstance from "../service/AuthService";
 const CrearUsuarios = () => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
-  e.preventDefault()
-  if (password === confirmPassword) {
-    try{
-      await authServiceInstance.createUser(email,password)
-      navigate('/Account')
-    }catch(e: any){
-      alert(e.message)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (password === confirmPassword) {
+      try {
+        await authServiceInstance.createUser(email, password);
+        navigate("/Account");
+      } catch (e: any) {
+        alert(e.message);
+      }
+    } else {
+      setPasswordMatch(false);
+      alert("Passwords do not match");
     }
-  } else {
-    setPasswordMatch(false);
-    alert("Passwords do not match")
-  }
-}
+  };
 
+  const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setPassword(value);
+    setPasswordMatch(value === confirmPassword);
+  };
 
-const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
-  const value = e.currentTarget.value;
-  setPassword(value);
-  setPasswordMatch(value === confirmPassword);
-};
-
-const handleConfirmPasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
-  const value = e.currentTarget.value;
-  setConfirmPassword(value);
-  setPasswordMatch(value === password);
-};
+  const handleConfirmPasswordChange = (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
+    const value = e.currentTarget.value;
+    setConfirmPassword(value);
+    setPasswordMatch(value === password);
+  };
 
   return (
     <div className="col-md-4 offset-md-4">
@@ -63,10 +63,10 @@ const handleConfirmPasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
               placeholder=""
               required
               name="password"
-              onInput={handlePasswordChange} 
+              onInput={handlePasswordChange}
             />
           </div>
-          
+
           <div className="mb-3">
             <label>Confirm Password</label>
             <input
@@ -78,18 +78,18 @@ const handleConfirmPasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
               onInput={handleConfirmPasswordChange}
             />
           </div>
-          {!passwordMatch && <p style={{ color: 'red' }}>Passwords do not match.</p>}
+          {!passwordMatch && (
+            <p style={{ color: "red" }}>Passwords do not match.</p>
+          )}
 
           <button type="submit" className="btn btn-primary form-control">
             Register
           </button>
 
-
-          <p style={{ textAlign: 'center', color: 'black'}}>
+          <p style={{ textAlign: "center", color: "black" }}>
             <Link to="/LogIn">Already have an account? Log in →</Link>
-        </p>
+          </p>
         </form>
-       
       </div>
     </div>
   );

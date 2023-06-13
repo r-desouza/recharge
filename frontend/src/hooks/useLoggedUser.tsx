@@ -11,7 +11,7 @@ const useLoggedUser = () => {
   useEffect(() => {
     const checkAdmin = async (uid: string) => {
       try {
-        const { admin } = await authServiceInstance.verifyAdmin(uid);
+        const admin = await authServiceInstance.verifyAdmin(uid);
         setIsAdmin(admin);
       } catch {
         console.log("error whitelist check");

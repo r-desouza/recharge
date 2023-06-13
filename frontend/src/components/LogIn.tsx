@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { User } from "firebase/auth";
 import authServiceInstance from "../service/AuthService";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 type LoginProps = {
   user: User | null;
-}
+};
 
 const LogIn = (props: LoginProps) => {
   const [email, setEmail] = useState("");
@@ -19,17 +19,19 @@ const LogIn = (props: LoginProps) => {
     e.preventDefault();
     try {
       await authServiceInstance.signIn(email, password);
-      navigate("/Account")
+      navigate("/Account");
     } catch (e: any) {
       console.log(e.message);
     }
   };
 
-  const handleGoogleLogin = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleGoogleLogin = async (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     e.preventDefault();
     try {
       await authServiceInstance.signInWithGoogle();
-      navigate("/Account")
+      navigate("/Account");
     } catch (e: any) {
       console.log(e.message);
     }
@@ -70,17 +72,18 @@ const LogIn = (props: LoginProps) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="mb-3"><button className="btn btn-primary form-control">Log in</button></div>
-          
+          <div className="mb-3">
+            <button className="btn btn-primary form-control">Log in</button>
+          </div>
         </form>
 
-        <p style={{ textAlign: 'center', color: 'black'}}>
-            <Link to="/SignUp">Don't have an account yet? JOIN NOW →</Link>
+        <p style={{ textAlign: "center", color: "black" }}>
+          <Link to="/SignUp">Don't have an account yet? JOIN NOW →</Link>
         </p>
         <hr className="hr hr-blurry" />
 
         <div>
-          <GoogleButton className="mx-auto mt-3" onClick={handleGoogleLogin}  />
+          <GoogleButton className="mx-auto mt-3" onClick={handleGoogleLogin} />
         </div>
       </div>
     </div>
