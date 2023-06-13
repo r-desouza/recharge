@@ -9,8 +9,6 @@ import { User } from "firebase/auth";
 import { InputMask } from "primereact/inputmask";
 import useToast from "../hooks/useToast";
 
-//PENDIENTE: MANEJAR LOS PAISES NULL DE ALGUNA FORMA
-
 interface SendRechargeProps {
   user: User | null;
 }
@@ -33,9 +31,15 @@ interface RechargeData {
 
 const SendRecharge = (props: SendRechargeProps) => {
   const list = all();
+  // const uniqueCountries2 = new Map(
+  //   list.map((pais) => [pais.countryName, pais.countryCode])
+  // );
   const uniqueCountries2 = new Map(
-    list.map((pais) => [pais.countryName, pais.countryCode])
+    list
+      .filter((pais) => pais.countryName && pais.countryCode)
+      .map((pais) => [pais.countryName, pais.countryCode])
   );
+
   const uniqueCountries = [...uniqueCountries2];
   const uid = props.user?.uid;
   uniqueCountries.sort();
@@ -59,7 +63,6 @@ const SendRecharge = (props: SendRechargeProps) => {
   };
 
   const setSelectedBrandHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Selected brand:" + e.target.value);
     setSelectedBrand(e.target.value);
   };
 
@@ -127,6 +130,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     value={selectedCountry[0]}
                     onChange={setSelectedCountryHandler}
                   >
+                    <option>Select country</option>
                     {uniqueCountries.map((country) => (
                       <option key={country[1]} value={country}>
                         {country[0]}
@@ -141,6 +145,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     aria-label="Default select example"
                     value={selectedBrand}
                     onChange={setSelectedBrandHandler}
+                    disabled={Object.values(selectedCountry)[0] === undefined}
                   >
                     {uniqueOps.map((operator) => (
                       <option key={operator}>{operator}</option>
