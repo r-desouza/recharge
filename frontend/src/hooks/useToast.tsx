@@ -15,7 +15,7 @@ const useToast = () => {
           bg={"dark"}
           onClose={() => setShow(false)}
           show={show}
-          delay={3000}
+          delay={4000}
           autohide
         >
           <Toast.Header closeButton={false}>

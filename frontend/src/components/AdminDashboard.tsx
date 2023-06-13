@@ -159,7 +159,8 @@ export const AdminDashboard = (props: AccountProps) => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">buyer id</th>
+                  <th scope="col">buyer email</th>
+                  <th scope="col">country</th>
                   <th scope="col">brand</th>
                   <th scope="col">phone number</th>
                   <th scope="col">amount</th>
@@ -167,14 +168,15 @@ export const AdminDashboard = (props: AccountProps) => {
                   <th scope="col">status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{ fontSize: "14px" }}>
                 {data.map((recarga, index) => (
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>{recarga.idComprador}</td>
+                    <td>{recarga.paisRecarga}</td>
                     <td>{recarga.companiaRecarga}</td>
                     <td>{recarga.numeroTelefono}</td>
-                    <td>{recarga.montoRecarga}</td>
+                    <td>${recarga.montoRecarga}</td>
                     <td>{convertDate(recarga.date)}</td>
                     <td>
                       <Dropdown as={ButtonGroup}>

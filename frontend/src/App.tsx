@@ -41,7 +41,7 @@ function App() {
           options={{ "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID }}
         >
           <Routes>
-            <Route path="/" element={<AdminDashboard user={userLoggeado} />} />
+            <Route path="/" />
             <Route path="/LogIn" element={<LogIn user={userLoggeado} />} />
             <Route
               path="/Account"
