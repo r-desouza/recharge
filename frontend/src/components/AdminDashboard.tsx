@@ -38,7 +38,7 @@ export const AdminDashboard = (props: AccountProps) => {
   const [loading, setLoading] = useState(true);
   const [loadingTabla, setLoadingTabla] = useState(true);
   const { showToast, toast } = useToast();
-  const [tituloDDL, setTituloDDL] = useState("Filtrar");
+  const [tituloDDL, setTituloDDL] = useState("");
 
   const convertDate = (date: number) => {
     const convertedDate: Date = new Date(date);
@@ -62,7 +62,7 @@ export const AdminDashboard = (props: AccountProps) => {
       });
       setData(dbData);
       setLoading(false);
-      filtrarPorEstado(Status.Pending, dbData);
+      filtrarPorEstado("All", dbData);
       console.log(dbData);
       console.log(dataFiltrada);
     };
@@ -73,15 +73,27 @@ export const AdminDashboard = (props: AccountProps) => {
   const cachedData = useMemo(() => [...data], [data]);
 
   const filtrarPorEstado = (estado: string, array?: []) => {
+    
     setLoadingTabla(true);
     let listaFiltrada = null;
     
 
-    if (array != null) {
-      listaFiltrada = array.filter((recarga) => recarga.estadoRecarga == estado);
-    } else {
+    if(array == null){
       listaFiltrada = data.filter((recarga) => recarga.estadoRecarga == estado);
     }
+
+    if(array !=null)
+    {
+      if(estado == "All")
+      {
+        listaFiltrada = array;
+      }else{
+        listaFiltrada = array.filter((recarga: Recarga) => recarga.estadoRecarga == estado);
+      }
+    }
+
+
+    console.log(listaFiltrada)
 
     setTimeout(() => {
       setTituloDDL(estado)
@@ -192,9 +204,10 @@ export const AdminDashboard = (props: AccountProps) => {
             <caption className="text-white fs-4">Recent Orders </caption>
             <caption>
             <DropdownButton className="" variant="secondary" id="dropdown-basic-button" title={tituloDDL}>
+              <Dropdown.Item onClick={() => filtrarPorEstado("All", data)}>All</Dropdown.Item>
               <Dropdown.Item onClick={() => filtrarPorEstado(Status.Completed)}>Completed</Dropdown.Item>
               <Dropdown.Item onClick={() => filtrarPorEstado(Status.Pending)}>Pending</Dropdown.Item>
-               <Dropdown.Item onClick={() => filtrarPorEstado(Status.Cancelled)}>Cancelled</Dropdown.Item>
+              <Dropdown.Item onClick={() => filtrarPorEstado(Status.Cancelled)}>Cancelled</Dropdown.Item>         
              </DropdownButton>
             </caption>
             
@@ -257,6 +270,7 @@ export const AdminDashboard = (props: AccountProps) => {
                           >
                             Cancelled
                           </Dropdown.Item>
+                          
                         </Dropdown.Menu>
                       </Dropdown>
                     </td>
