@@ -72,14 +72,15 @@ export const AdminDashboard = (props: AccountProps) => {
 
   const cachedData = useMemo(() => [...data], [data]);
 
-  const filtrarPorEstado = (estado: string, array?: []) => {
+  const filtrarPorEstado = (estado: string, array?: Recarga[] ) => {
     
     setLoadingTabla(true);
-    let listaFiltrada = null;
+    
+    let listaFiltrada: Recarga[] | null = null;
     
 
     if(array == null){
-      listaFiltrada = data.filter((recarga) => recarga.estadoRecarga == estado);
+      listaFiltrada = data.filter((recarga: Recarga) => recarga.estadoRecarga == estado);
     }
 
     if(array !=null)
@@ -92,12 +93,15 @@ export const AdminDashboard = (props: AccountProps) => {
       }
     }
 
+    listaFiltrada.sort(function(a,b){
+      return (b.date) - (a.date);
+    });
 
     console.log(listaFiltrada)
 
     setTimeout(() => {
       setTituloDDL(estado)
-      setDataFiltrada(listaFiltrada);
+      setDataFiltrada(listaFiltrada || []);
       setLoadingTabla(false);
     }, 175);
 
@@ -126,10 +130,12 @@ export const AdminDashboard = (props: AccountProps) => {
     }
   };
 
-  const sum = data.reduce((accumulator, recharge) => {
-    const value = parseFloat(recharge.montoRecarga);
-    return accumulator + value;
-  }, 0);
+  const sum = data
+    .reduce((accumulator, recharge) => {
+      const value = parseFloat(recharge.montoRecarga.toString());
+      return accumulator + value;
+    }, 0)
+    .toFixed(2);
 
   const countPendientes = data.filter(
     (recarga) => recarga.estadoRecarga === "Pending"
