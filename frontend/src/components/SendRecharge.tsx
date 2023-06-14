@@ -31,9 +31,6 @@ interface RechargeData {
 
 const SendRecharge = (props: SendRechargeProps) => {
   const list = all();
-  // const uniqueCountries2 = new Map(
-  //   list.map((pais) => [pais.countryName, pais.countryCode])
-  // );
   const uniqueCountries2 = new Map(
     list
       .filter((pais) => pais.countryName && pais.countryCode)
@@ -74,14 +71,13 @@ const SendRecharge = (props: SendRechargeProps) => {
       countryCode: Object.values(selectedCountry)[0],
     });
     if (Object.values(selectedCountry)[0] !== undefined) {
-      // const uniqueOperators = [...new Set(ops.map((option) => option.brand))];
       const uniqueOperators = [
         ...new Set(
           ops.map((option) =>
             option.brand && option.brand !== "" ? option.brand : null
           )
         ),
-      ].filter((brand) => brand !== null);
+      ].filter((brand) => brand !== null) as string[];
       uniqueOperators.sort();
       setUniqueOps(uniqueOperators);
       setSelectedBrand(uniqueOperators[0]);
@@ -98,7 +94,7 @@ const SendRecharge = (props: SendRechargeProps) => {
         estadoRecarga: "Pending",
         idComprador: uid,
         montoRecarga: data.amount,
-        numeroTelefono: "+" + data.selectedPrefix + " " + data.phone,
+        numeroTelefono: "+" + (data.selectedPrefix || "") + " " + data.phone,
         paisRecarga: Object.keys(data.selectedCountry)[0],
         paypalOrderID: data.orderId,
         paypalOrderStatus: data.status,
@@ -175,7 +171,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     <InputMask
                       mask="99.99"
                       value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
+                      onChange={(e) => setAmount(e.target.value as string)}
                       className="form-control"
                       slotChar="00"
                       aria-label="Dollar amount (with dot and two decimal places)"
@@ -193,6 +189,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     label: "checkout",
                   }}
                   createOrder={(data, actions) => {
+                    data;
                     return actions.order.create({
                       purchase_units: [
                         {
@@ -213,6 +210,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     }
                   }}
                   onApprove={async (data, actions) => {
+                    data;
                     const order = await actions.order?.capture();
                     const status = order?.status;
                     const orderId = order?.id;
@@ -234,7 +232,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     phone,
                     selectedPrefix,
                   ]}
-                  onError={(err) => {
+                  onError={() => {
                     showToast(
                       "Paypal  Checkout Error",
                       "Please make sure you're entering a valid input"

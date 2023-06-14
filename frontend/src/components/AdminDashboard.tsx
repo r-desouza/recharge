@@ -7,8 +7,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import useToast from "../hooks/useToast";
 import { User } from "firebase/auth";
-import Fade from 'react-bootstrap/Fade';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import Fade from "react-bootstrap/Fade";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 interface Recarga {
   id: string;
@@ -72,41 +72,38 @@ export const AdminDashboard = (props: AccountProps) => {
 
   const cachedData = useMemo(() => [...data], [data]);
 
-  const filtrarPorEstado = (estado: string, array?: Recarga[] ) => {
-    
+  const filtrarPorEstado = (estado: string, array?: Recarga[]) => {
     setLoadingTabla(true);
-    
-    let listaFiltrada: Recarga[] | null = null;
-    
 
-    if(array == null){
-      listaFiltrada = data.filter((recarga: Recarga) => recarga.estadoRecarga == estado);
+    let listaFiltrada: Recarga[] = [];
+
+    if (array == null) {
+      listaFiltrada = data.filter(
+        (recarga: Recarga) => recarga.estadoRecarga === estado
+      );
     }
 
-    if(array !=null)
-    {
-      if(estado == "All")
-      {
+    if (array != null) {
+      if (estado == "All") {
         listaFiltrada = array;
-      }else{
-        listaFiltrada = array.filter((recarga: Recarga) => recarga.estadoRecarga == estado);
+      } else {
+        listaFiltrada = array.filter(
+          (recarga: Recarga) => recarga.estadoRecarga === estado
+        );
       }
     }
 
-    listaFiltrada.sort(function(a,b){
-      return (b.date) - (a.date);
+    listaFiltrada.sort(function (a, b) {
+      return b.date - a.date;
     });
 
-    console.log(listaFiltrada)
+    console.log(listaFiltrada);
 
     setTimeout(() => {
-      setTituloDDL(estado)
+      setTituloDDL(estado);
       setDataFiltrada(listaFiltrada || []);
       setLoadingTabla(false);
     }, 175);
-
-
-    
   };
 
   const updateDocument = async (id: string, status: string) => {
@@ -118,7 +115,6 @@ export const AdminDashboard = (props: AccountProps) => {
     });
 
     setData(updatedData);
-    
 
     console.log("llegue aca");
 
@@ -203,87 +199,122 @@ export const AdminDashboard = (props: AccountProps) => {
               </div>
             </div>
 
-           
             <Fade timeout={100} in={!loadingTabla}>
-              
-            <table className="table caption-top bg-white rounded mt-2 table-sm" >
-            <caption className="text-white fs-4">Recent Orders </caption>
-            <caption>
-            <DropdownButton className="" variant="secondary" id="dropdown-basic-button" title={tituloDDL}>
-              <Dropdown.Item onClick={() => filtrarPorEstado("All", data)}>All</Dropdown.Item>
-              <Dropdown.Item onClick={() => filtrarPorEstado(Status.Completed)}>Completed</Dropdown.Item>
-              <Dropdown.Item onClick={() => filtrarPorEstado(Status.Pending)}>Pending</Dropdown.Item>
-              <Dropdown.Item onClick={() => filtrarPorEstado(Status.Cancelled)}>Cancelled</Dropdown.Item>         
-             </DropdownButton>
-            </caption>
-            
-              <thead>
+              <table className="table caption-top bg-white rounded mt-2 table-sm">
+                <caption className="text-white fs-4">Recent Orders </caption>
+                <caption>
+                  <DropdownButton
+                    className=""
+                    variant="secondary"
+                    id="dropdown-basic-button"
+                    title={tituloDDL}
+                  >
+                    <Dropdown.Item
+                      onClick={() => filtrarPorEstado("All", data)}
+                    >
+                      All
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => filtrarPorEstado(Status.Completed)}
+                    >
+                      Completed
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => filtrarPorEstado(Status.Pending)}
+                    >
+                      Pending
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => filtrarPorEstado(Status.Cancelled)}
+                    >
+                      Cancelled
+                    </Dropdown.Item>
+                  </DropdownButton>
+                </caption>
 
-                <tr>
-                  <th className="text-center"scope="col">#</th>
-                  <th className="text-center" scope="col">buyer email</th>
-                  <th className="text-center" scope="col">country</th>
-                  <th className="text-center" scope="col">brand</th>
-                  <th className="text-center" scope="col">phone number</th>
-                  <th className="text-center" scope="col">amount</th>
-                  <th className="text-center" scope="col">date</th>
-                  <th className="text-center" scope="col">status</th>
-                </tr>
-              </thead>
-              <tbody style={{ fontSize: "14px" }}>
-                {dataFiltrada.map((recarga, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td className="text-center" >{recarga.idComprador}</td>
-                    <td className="text-center" >{recarga.paisRecarga}</td>
-                    <td className="text-center">{recarga.companiaRecarga}</td>
-                    <td className="text-center">{recarga.numeroTelefono}</td>
-                    <td className="text-center">${recarga.montoRecarga}</td>
-                    <td className="text-center" >{convertDate(recarga.date)}</td>
-                    <td>
-                      <Dropdown as={ButtonGroup}>
-                        <Button
-                          variant={setButtonVariant(recarga.estadoRecarga)}
-                        >
-                          {recarga.estadoRecarga}
-                        </Button>
-
-                        <Dropdown.Toggle
-                          split
-                          variant={setButtonVariant(recarga.estadoRecarga)}
-                          id="dropdown-split-basic"
-                        />
-
-                        <Dropdown.Menu>
-                          <Dropdown.Item
-                            onClick={() =>
-                              updateDocument(recarga.id, Status.Pending)
-                            }
-                          >
-                            Pending
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              updateDocument(recarga.id, Status.Completed)
-                            }
-                          >
-                            Completed
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              updateDocument(recarga.id, Status.Cancelled)
-                            }
-                          >
-                            Cancelled
-                          </Dropdown.Item>
-                          
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </td>
+                <thead>
+                  <tr>
+                    <th className="text-center" scope="col">
+                      #
+                    </th>
+                    <th className="text-center" scope="col">
+                      buyer email
+                    </th>
+                    <th className="text-center" scope="col">
+                      country
+                    </th>
+                    <th className="text-center" scope="col">
+                      brand
+                    </th>
+                    <th className="text-center" scope="col">
+                      phone number
+                    </th>
+                    <th className="text-center" scope="col">
+                      amount
+                    </th>
+                    <th className="text-center" scope="col">
+                      date
+                    </th>
+                    <th className="text-center" scope="col">
+                      status
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody style={{ fontSize: "14px" }}>
+                  {dataFiltrada.map((recarga, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td className="text-center">{recarga.idComprador}</td>
+                      <td className="text-center">{recarga.paisRecarga}</td>
+                      <td className="text-center">{recarga.companiaRecarga}</td>
+                      <td className="text-center">{recarga.numeroTelefono}</td>
+                      <td className="text-center">${recarga.montoRecarga}</td>
+                      <td className="text-center">
+                        {convertDate(recarga.date)}
+                      </td>
+                      <td>
+                        <Dropdown as={ButtonGroup}>
+                          <Button
+                            variant={setButtonVariant(recarga.estadoRecarga)}
+                          >
+                            {recarga.estadoRecarga}
+                          </Button>
+
+                          <Dropdown.Toggle
+                            split
+                            variant={setButtonVariant(recarga.estadoRecarga)}
+                            id="dropdown-split-basic"
+                          />
+
+                          <Dropdown.Menu>
+                            <Dropdown.Item
+                              onClick={() =>
+                                updateDocument(recarga.id, Status.Pending)
+                              }
+                            >
+                              Pending
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                updateDocument(recarga.id, Status.Completed)
+                              }
+                            >
+                              Completed
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                updateDocument(recarga.id, Status.Cancelled)
+                              }
+                            >
+                              Cancelled
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </Fade>
           </div>
         </>
