@@ -7,6 +7,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import useToast from "../hooks/useToast";
 import { User } from "firebase/auth";
+import Fade from 'react-bootstrap/Fade';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 interface Recarga {
   id: string;
@@ -32,8 +34,11 @@ type AccountProps = {
 
 export const AdminDashboard = (props: AccountProps) => {
   const [data, setData] = useState<Recarga[]>([]);
+  const [dataFiltrada, setDataFiltrada] = useState<Recarga[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingTabla, setLoadingTabla] = useState(true);
   const { showToast, toast } = useToast();
+  const [tituloDDL, setTituloDDL] = useState("Filtrar");
 
   const convertDate = (date: number) => {
     const convertedDate: Date = new Date(date);
@@ -57,13 +62,36 @@ export const AdminDashboard = (props: AccountProps) => {
       });
       setData(dbData);
       setLoading(false);
+      filtrarPorEstado(Status.Pending, dbData);
       console.log(dbData);
+      console.log(dataFiltrada);
     };
 
     dbSnap();
   }, []);
 
   const cachedData = useMemo(() => [...data], [data]);
+
+  const filtrarPorEstado = (estado: string, array?: []) => {
+    setLoadingTabla(true);
+    let listaFiltrada = null;
+    
+
+    if (array != null) {
+      listaFiltrada = array.filter((recarga) => recarga.estadoRecarga == estado);
+    } else {
+      listaFiltrada = data.filter((recarga) => recarga.estadoRecarga == estado);
+    }
+
+    setTimeout(() => {
+      setTituloDDL(estado)
+      setDataFiltrada(listaFiltrada);
+      setLoadingTabla(false);
+    }, 175);
+
+
+    
+  };
 
   const updateDocument = async (id: string, status: string) => {
     const updatedData = cachedData.map((doc) => {
@@ -74,6 +102,9 @@ export const AdminDashboard = (props: AccountProps) => {
     });
 
     setData(updatedData);
+    
+
+    console.log("llegue aca");
 
     try {
       await updateDoc(doc(db, "recargas", id), { estadoRecarga: status });
@@ -106,7 +137,6 @@ export const AdminDashboard = (props: AccountProps) => {
       {!loading && (
         <>
           {toast()}
-
           <div className="px-3">
             <div className="card">
               <div className="card-header">
@@ -154,30 +184,43 @@ export const AdminDashboard = (props: AccountProps) => {
                 </div>
               </div>
             </div>
-            <table className="table caption-top bg-white rounded mt-2">
-              <caption className="text-white fs-4">Recent Orders</caption>
+
+           
+            <Fade timeout={100} in={!loadingTabla}>
+              
+            <table className="table caption-top bg-white rounded mt-2 table-sm" >
+            <caption className="text-white fs-4">Recent Orders </caption>
+            <caption>
+            <DropdownButton className="" variant="secondary" id="dropdown-basic-button" title={tituloDDL}>
+              <Dropdown.Item onClick={() => filtrarPorEstado(Status.Completed)}>Completed</Dropdown.Item>
+              <Dropdown.Item onClick={() => filtrarPorEstado(Status.Pending)}>Pending</Dropdown.Item>
+               <Dropdown.Item onClick={() => filtrarPorEstado(Status.Cancelled)}>Cancelled</Dropdown.Item>
+             </DropdownButton>
+            </caption>
+            
               <thead>
+
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">buyer email</th>
-                  <th scope="col">country</th>
-                  <th scope="col">brand</th>
-                  <th scope="col">phone number</th>
-                  <th scope="col">amount</th>
-                  <th scope="col">date</th>
-                  <th scope="col">status</th>
+                  <th className="text-center"scope="col">#</th>
+                  <th className="text-center" scope="col">buyer email</th>
+                  <th className="text-center" scope="col">country</th>
+                  <th className="text-center" scope="col">brand</th>
+                  <th className="text-center" scope="col">phone number</th>
+                  <th className="text-center" scope="col">amount</th>
+                  <th className="text-center" scope="col">date</th>
+                  <th className="text-center" scope="col">status</th>
                 </tr>
               </thead>
               <tbody style={{ fontSize: "14px" }}>
-                {data.map((recarga, index) => (
+                {dataFiltrada.map((recarga, index) => (
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
-                    <td>{recarga.idComprador}</td>
-                    <td>{recarga.paisRecarga}</td>
-                    <td>{recarga.companiaRecarga}</td>
-                    <td>{recarga.numeroTelefono}</td>
-                    <td>${recarga.montoRecarga}</td>
-                    <td>{convertDate(recarga.date)}</td>
+                    <td className="text-center" >{recarga.idComprador}</td>
+                    <td className="text-center" >{recarga.paisRecarga}</td>
+                    <td className="text-center">{recarga.companiaRecarga}</td>
+                    <td className="text-center">{recarga.numeroTelefono}</td>
+                    <td className="text-center">${recarga.montoRecarga}</td>
+                    <td className="text-center" >{convertDate(recarga.date)}</td>
                     <td>
                       <Dropdown as={ButtonGroup}>
                         <Button
@@ -221,6 +264,7 @@ export const AdminDashboard = (props: AccountProps) => {
                 ))}
               </tbody>
             </table>
+            </Fade>
           </div>
         </>
       )}
