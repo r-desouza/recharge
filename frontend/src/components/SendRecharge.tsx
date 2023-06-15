@@ -161,6 +161,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     onChange={(e) => setPhone(e.target.value)}
                     type="tel"
                     placeholder="Enter phone number"
+                    maxLength={15}
                   />
                 </Form.Group>
 
