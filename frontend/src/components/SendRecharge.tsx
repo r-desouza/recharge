@@ -27,6 +27,7 @@ interface RechargeData {
   phone: string;
   status?: string;
   orderId?: string;
+  paymentId?: string;
 }
 
 const SendRecharge = (props: SendRechargeProps) => {
@@ -98,6 +99,7 @@ const SendRecharge = (props: SendRechargeProps) => {
         paisRecarga: Object.keys(data.selectedCountry)[0],
         paypalOrderID: data.orderId,
         paypalOrderStatus: data.status,
+        paypalPaymentID: data.paymentId,
       };
 
       showToast("Successs", "Recharge submitted successfully");
