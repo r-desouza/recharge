@@ -158,9 +158,15 @@ const SendRecharge = (props: SendRechargeProps) => {
                     +{selectedPrefix}
                   </InputGroup.Text>
                   <Form.Control
-                    onChange={(e) =>
-                      setPhone(e.target.value.replace(/\D/g, ""))
-                    }
+                    onKeyDown={(e) => {
+                      const keyCode = e.which || e.keyCode;
+                      const keyValue = String.fromCharCode(keyCode);
+                      const isNumber = /^\d+$/.test(keyValue);
+                      if (!isNumber) {
+                        e.preventDefault();
+                      }
+                    }}
+                    onChange={(e) => setPhone(e.target.value)}
                     type="tel"
                     placeholder="Enter phone number"
                     maxLength={15}
