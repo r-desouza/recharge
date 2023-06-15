@@ -13,6 +13,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import AdminDashboard from "./components/AdminDashboard";
+import Home from "./components/Home";
 
 import "bootstrap/scss/bootstrap.scss";
 
@@ -41,8 +42,8 @@ function App() {
           options={{ "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID }}
         >
           <Routes>
-            <Route path="/" />
-            <Route path="/LogIn" element={<LogIn user={userLoggeado} />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LogIn user={userLoggeado} />} />
             <Route
               path="/Account"
               element={
@@ -53,13 +54,12 @@ function App() {
                 )
               }
             />
-            <Route path="/HowToRecharge" element={<HowToRecharge />} />
+            <Route path="/howtorecharge" element={<HowToRecharge />} />
             <Route
-              path="/SendRecharge"
+              path="/sendrecharge"
               element={<SendRecharge user={userLoggeado} />}
             />
-            <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/edit/:id" element={<SignUp />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
         </PayPalScriptProvider>
       </div>
