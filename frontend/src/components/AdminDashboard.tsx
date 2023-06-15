@@ -238,7 +238,7 @@ export const AdminDashboard = (props: AccountProps) => {
                       #
                     </th>
                     <th className="text-center" scope="col">
-                      buyer email
+                      buyer id
                     </th>
                     <th className="text-center" scope="col">
                       country
@@ -248,6 +248,12 @@ export const AdminDashboard = (props: AccountProps) => {
                     </th>
                     <th className="text-center" scope="col">
                       phone number
+                    </th>
+                    <th className="text-center" scope="col">
+                      paypal Order ID
+                    </th>
+                    <th className="text-center" scope="col">
+                      paypal order status
                     </th>
                     <th className="text-center" scope="col">
                       amount
@@ -268,6 +274,10 @@ export const AdminDashboard = (props: AccountProps) => {
                       <td className="text-center">{recarga.paisRecarga}</td>
                       <td className="text-center">{recarga.companiaRecarga}</td>
                       <td className="text-center">{recarga.numeroTelefono}</td>
+                      <td className="text-center">{recarga.paypalOrderID}</td>
+                      <td className="text-center">
+                        {recarga.paypalOrderStatus}
+                      </td>
                       <td className="text-center">${recarga.montoRecarga}</td>
                       <td className="text-center">
                         {convertDate(recarga.date)}
