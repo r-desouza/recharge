@@ -92,7 +92,7 @@ const CrearUsuarios = () => {
             </button>
 
             <p style={{ textAlign: "center", color: "black" }}>
-              <Link to="/LogIn">Already have an account? Log in →</Link>
+              <Link to="/login">Already have an account? Log in →</Link>
             </p>
           </form>
         </div>
