@@ -55,11 +55,11 @@ export const Account = (props: AccountProps) => {
               <div className="card-body">
                 <h6>Email: {props.user?.email}</h6>
                 <p>Account Details:</p>
-                <ul>
+                {/* <ul>
                   <li>Membership Level: Gold</li>
                   <li>Subscription Plan: Premium</li>
                   <li>Payment Method: Credit Card</li>
-                </ul>
+                </ul> */}
               </div>
             </div>
             <div className="text-center mt-4">
