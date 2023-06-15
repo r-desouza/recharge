@@ -158,7 +158,9 @@ const SendRecharge = (props: SendRechargeProps) => {
                     +{selectedPrefix}
                   </InputGroup.Text>
                   <Form.Control
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) =>
+                      setPhone(e.target.value.replace(/\D/g, ""))
+                    }
                     type="tel"
                     placeholder="Enter phone number"
                     maxLength={15}
