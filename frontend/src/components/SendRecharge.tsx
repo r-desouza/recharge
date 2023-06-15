@@ -160,9 +160,12 @@ const SendRecharge = (props: SendRechargeProps) => {
                   <Form.Control
                     onKeyDown={(e) => {
                       const keyCode = e.which || e.keyCode;
-                      const keyValue = String.fromCharCode(keyCode);
-                      const isNumber = /^\d+$/.test(keyValue);
-                      if (!isNumber) {
+                      const isNumber =
+                        (keyCode >= 48 && keyCode <= 57) ||
+                        (keyCode >= 96 && keyCode <= 105);
+                      const isDeleteOrBackspace =
+                        keyCode === 8 || keyCode === 46;
+                      if (!isNumber && !isDeleteOrBackspace) {
                         e.preventDefault();
                       }
                     }}
