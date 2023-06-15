@@ -45,7 +45,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LogIn user={userLoggeado} />} />
             <Route
-              path="/Account"
+              path="/account"
               element={
                 isAdmin ? (
                   <AdminDashboard user={userLoggeado} />

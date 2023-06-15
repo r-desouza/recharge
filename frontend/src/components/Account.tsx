@@ -18,7 +18,7 @@ export const Account = (props: AccountProps) => {
     setTimeout(() => {
       setLoading(false);
       if (props.user == null) {
-        navigate("/LogIn");
+        navigate("/login");
       }
     }, 400);
   }, []);

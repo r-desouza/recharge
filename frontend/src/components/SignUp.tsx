@@ -16,7 +16,7 @@ const CrearUsuarios = () => {
     if (password === confirmPassword) {
       try {
         await authServiceInstance.createUser(email, password);
-        navigate("/Account");
+        navigate("/account");
       } catch (e: any) {
         showToast("Signup failed", e.message);
       }

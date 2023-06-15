@@ -20,7 +20,7 @@ const LogIn = (props: LoginProps) => {
     e.preventDefault();
     try {
       await authServiceInstance.signIn(email, password);
-      navigate("/Account");
+      navigate("/account");
     } catch (e: any) {
       showToast("Login failed", "Invalid email/password");
       console.log(e.message);

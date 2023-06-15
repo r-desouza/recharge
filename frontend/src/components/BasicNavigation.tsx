@@ -9,10 +9,10 @@ const LoggedNavigation = () => {
         <Container>
           <Navbar.Brand href="/">Recharge</Navbar.Brand>
           <Nav className="me-100">
-            <Nav.Link href="/SendRecharge">Send Recharge</Nav.Link>
-            <Nav.Link href="/HowToRecharge">How to Recharge</Nav.Link>
-            <Nav.Link href="/SignUp">Signup</Nav.Link>
-            <Nav.Link href="/LogIn">Login</Nav.Link>
+            <Nav.Link href="/sendrecharge">Send Recharge</Nav.Link>
+            <Nav.Link href="/howtorecharge">How to Recharge</Nav.Link>
+            <Nav.Link href="/signup">Signup</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
