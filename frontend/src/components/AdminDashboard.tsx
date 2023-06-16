@@ -66,9 +66,8 @@ export const AdminDashboard = (props: AccountProps) => {
       });
       setData(dbData);
       setLoading(false);
-      filtrarPorEstado("All", dbData);
-      console.log(dbData);
-      console.log(dataFiltrada);
+      filtrarPorEstado("All", "", dbData);
+
     };
 
     dbSnap();
@@ -79,11 +78,12 @@ export const AdminDashboard = (props: AccountProps) => {
   const filtrarPorEstado = (estado: string, specificSearch?: string ,array?: Recarga[]) => {
     setLoadingTabla(true);
 
+
     let listaFiltrada: Recarga[] = [];
-    
 
     if (array == null) {
       listaFiltrada = data.filter((recarga: Recarga) => recarga.estadoRecarga === estado);
+      console.log(listaFiltrada)
       
     }
 
@@ -97,15 +97,16 @@ export const AdminDashboard = (props: AccountProps) => {
       }
 
     }
+
+
     if(specificSearch != null)
     {
-      const listaFiltrada2 = listaFiltrada.filter((recarga: Recarga) =>
+      listaFiltrada = listaFiltrada.filter((recarga: Recarga) =>
       recarga.idComprador.toLowerCase().includes(specificSearch.trim().toLowerCase()) ||
       recarga.paypalOrderID.toLowerCase().includes(specificSearch.trim().toLowerCase()));
-      console.log(listaFiltrada2)
 
     }
-    console.log(listaFiltrada)
+ 
     
     listaFiltrada.sort(function (a, b) {
       return b.date - a.date;
@@ -162,7 +163,7 @@ export const AdminDashboard = (props: AccountProps) => {
 
   function handleChangeSearch(value: string) {
     setSpecificFilter(value)
-    filtrarPorEstado(statusFilter,value)
+    filtrarPorEstado(statusFilter,value,data)
 
   }
 
@@ -229,21 +230,21 @@ export const AdminDashboard = (props: AccountProps) => {
                   id="dropdown-basic-button"
                   title={tituloDDL}
                 >
-                  <Dropdown.Item onClick={() => filtrarPorEstado("All", data)}>
+                  <Dropdown.Item onClick={() => filtrarPorEstado("All", specificFilter, data)}>
                     All
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={() => filtrarPorEstado(Status.Completed)}
+                    onClick={() => filtrarPorEstado(Status.Completed, specificFilter)}
                   >
                     Completed
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={() => filtrarPorEstado(Status.Pending)}
+                    onClick={() => filtrarPorEstado(Status.Pending, specificFilter)}
                   >
                     Pending
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={() => filtrarPorEstado(Status.Cancelled)}
+                    onClick={() => filtrarPorEstado(Status.Cancelled, specificFilter)}
                   >
                     Cancelled
                   </Dropdown.Item>
