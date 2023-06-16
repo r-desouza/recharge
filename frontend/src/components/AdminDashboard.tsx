@@ -1,4 +1,4 @@
-import { Nav } from "react-bootstrap";
+import { Nav, Form } from "react-bootstrap";
 import { db } from "../firebase";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useState, useEffect, useMemo } from "react";
@@ -9,6 +9,7 @@ import useToast from "../hooks/useToast";
 import { User } from "firebase/auth";
 import Fade from "react-bootstrap/Fade";
 import DropdownButton from "react-bootstrap/DropdownButton";
+
 
 interface Recarga {
   id: string;
@@ -39,6 +40,9 @@ export const AdminDashboard = (props: AccountProps) => {
   const [loadingTabla, setLoadingTabla] = useState(true);
   const { showToast, toast } = useToast();
   const [tituloDDL, setTituloDDL] = useState("");
+  const [statusFilter , setStatusFilter] = useState("");
+  const [specificFilter , setSpecificFilter] = useState("");
+  
 
   const convertDate = (date: number) => {
     const convertedDate: Date = new Date(date);
@@ -72,37 +76,48 @@ export const AdminDashboard = (props: AccountProps) => {
 
   const cachedData = useMemo(() => [...data], [data]);
 
-  const filtrarPorEstado = (estado: string, array?: Recarga[]) => {
+  const filtrarPorEstado = (estado: string, specificSearch?: string ,array?: Recarga[]) => {
     setLoadingTabla(true);
 
     let listaFiltrada: Recarga[] = [];
+    
 
     if (array == null) {
-      listaFiltrada = data.filter(
-        (recarga: Recarga) => recarga.estadoRecarga === estado
-      );
+      listaFiltrada = data.filter((recarga: Recarga) => recarga.estadoRecarga === estado);
+      
     }
 
     if (array != null) {
-      if (estado == "All") {
+      if (estado == "All") 
+      {
         listaFiltrada = array;
-      } else {
-        listaFiltrada = array.filter(
-          (recarga: Recarga) => recarga.estadoRecarga === estado
-        );
+      } else 
+      {
+        listaFiltrada = array.filter((recarga: Recarga) => recarga.estadoRecarga === estado);
       }
-    }
 
+    }
+    if(specificSearch != null)
+    {
+      const listaFiltrada2 = listaFiltrada.filter((recarga: Recarga) =>
+      recarga.idComprador.toLowerCase().includes(specificSearch.trim().toLowerCase()) ||
+      recarga.paypalOrderID.toLowerCase().includes(specificSearch.trim().toLowerCase()));
+      console.log(listaFiltrada2)
+
+    }
+    console.log(listaFiltrada)
+    
     listaFiltrada.sort(function (a, b) {
       return b.date - a.date;
     });
 
-    console.log(listaFiltrada);
 
     setTimeout(() => {
       setTituloDDL(estado);
+      setStatusFilter(estado);
       setDataFiltrada(listaFiltrada || []);
       setLoadingTabla(false);
+
     }, 175);
   };
 
@@ -144,6 +159,12 @@ export const AdminDashboard = (props: AccountProps) => {
     const date = new Date(timestamp.date);
     return date > lastWeekStartDate && date <= new Date();
   }).length;
+
+  function handleChangeSearch(value: string) {
+    setSpecificFilter(value)
+    filtrarPorEstado(statusFilter,value)
+
+  }
 
   return (
     <>
@@ -199,73 +220,77 @@ export const AdminDashboard = (props: AccountProps) => {
               </div>
             </div>
 
-            <Fade timeout={100} in={!loadingTabla}>
-              <table className="table caption-top bg-white rounded mt-2 table-sm">
-                <caption className="text-white fs-4">Recent Orders </caption>
-                <caption>
-                  <DropdownButton
-                    className=""
-                    variant="secondary"
-                    id="dropdown-basic-button"
-                    title={tituloDDL}
+            <table className="table caption-top bg-white rounded mt-2 table-sm">
+              <caption className="text-white fs-4">Orders </caption>
+              <caption>
+                <DropdownButton
+                  className=""
+                  variant="secondary"
+                  id="dropdown-basic-button"
+                  title={tituloDDL}
+                >
+                  <Dropdown.Item onClick={() => filtrarPorEstado("All", data)}>
+                    All
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => filtrarPorEstado(Status.Completed)}
                   >
-                    <Dropdown.Item
-                      onClick={() => filtrarPorEstado("All", data)}
-                    >
-                      All
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => filtrarPorEstado(Status.Completed)}
-                    >
-                      Completed
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => filtrarPorEstado(Status.Pending)}
-                    >
-                      Pending
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => filtrarPorEstado(Status.Cancelled)}
-                    >
-                      Cancelled
-                    </Dropdown.Item>
-                  </DropdownButton>
-                </caption>
+                    Completed
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => filtrarPorEstado(Status.Pending)}
+                  >
+                    Pending
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => filtrarPorEstado(Status.Cancelled)}
+                  >
+                    Cancelled
+                  </Dropdown.Item>
+                </DropdownButton>
 
-                <thead>
-                  <tr>
-                    <th className="text-center" scope="col">
-                      #
-                    </th>
-                    <th className="text-center" scope="col">
-                      buyer id
-                    </th>
-                    <th className="text-center" scope="col">
-                      country
-                    </th>
-                    <th className="text-center" scope="col">
-                      brand
-                    </th>
-                    <th className="text-center" scope="col">
-                      phone number
-                    </th>
-                    <th className="text-center" scope="col">
-                      paypal Order ID
-                    </th>
-                    <th className="text-center" scope="col">
-                      paypal order status
-                    </th>
-                    <th className="text-center" scope="col">
-                      amount
-                    </th>
-                    <th className="text-center" scope="col">
-                      date
-                    </th>
-                    <th className="text-center" scope="col">
-                      status
-                    </th>
-                  </tr>
-                </thead>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder=""
+                    required
+                    onChange={(e) => handleChangeSearch(e.target.value) }
+                  />
+
+              </caption>
+
+              <thead>
+                <tr>
+                  <th className="text-center" scope="col">
+                    #
+                  </th>
+                  <th className="text-center" scope="col">
+                    buyer id
+                  </th>
+                  <th className="text-center" scope="col">
+                    country
+                  </th>
+                  <th className="text-center" scope="col">
+                    brand
+                  </th>
+                  <th className="text-center" scope="col">
+                    phone number
+                  </th>
+                  <th className="text-center" scope="col">
+                    paypal Order ID
+                  </th>
+                  <th className="text-center" scope="col">
+                    amount
+                  </th>
+                  <th className="text-center" scope="col">
+                    date
+                  </th>
+                  <th className="text-center" scope="col">
+                    status
+                  </th>
+                </tr>
+              </thead>
+              <Fade timeout={100} in={!loadingTabla}>
                 <tbody style={{ fontSize: "14px" }}>
                   {dataFiltrada.map((recarga, index) => (
                     <tr key={index}>
@@ -275,9 +300,6 @@ export const AdminDashboard = (props: AccountProps) => {
                       <td className="text-center">{recarga.companiaRecarga}</td>
                       <td className="text-center">{recarga.numeroTelefono}</td>
                       <td className="text-center">{recarga.paypalOrderID}</td>
-                      <td className="text-center">
-                        {recarga.paypalOrderStatus}
-                      </td>
                       <td className="text-center">${recarga.montoRecarga}</td>
                       <td className="text-center">
                         {convertDate(recarga.date)}
@@ -324,8 +346,8 @@ export const AdminDashboard = (props: AccountProps) => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </Fade>
+              </Fade>
+            </table>
           </div>
         </>
       )}
