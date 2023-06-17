@@ -9,7 +9,7 @@ const LoggedNavigation = () => {
         <Container>
           <Navbar.Brand href="/">Recharge</Navbar.Brand>
           <Nav className="me-100">
-            <Nav.Link href="/sendrecharge">Send Recharge</Nav.Link>
+            <Nav.Link href="/login">Send Recharge</Nav.Link>
             <Nav.Link href="/howtorecharge">How to Recharge</Nav.Link>
             <Nav.Link href="/signup">Signup</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>

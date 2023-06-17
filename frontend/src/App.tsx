@@ -46,18 +46,12 @@ function App() {
             <Route path="/login" element={<LogIn user={userLoggeado} />} />
             <Route
               path="/account"
-              element={
-                isAdmin ? (
-                  <AdminDashboard user={userLoggeado} />
-                ) : (
-                  <Account user={userLoggeado} />
-                )
-              }
-            />
+              element={userLoggeado? (isAdmin ? (<AdminDashboard user={userLoggeado} />) : (<Account user={userLoggeado} />)) : (<LogIn user={userLoggeado} />)}/>
             <Route path="/howtorecharge" element={<HowToRecharge />} />
             <Route
+          
               path="/sendrecharge"
-              element={<SendRecharge user={userLoggeado} />}
+              element={userLoggeado? <SendRecharge user={userLoggeado} /> : <LogIn user={userLoggeado} />}
             />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
