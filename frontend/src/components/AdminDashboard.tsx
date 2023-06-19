@@ -1,4 +1,4 @@
-import { Nav } from "react-bootstrap";
+import { Nav, Form } from "react-bootstrap";
 import { db } from "../firebase";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useState, useEffect, useMemo } from "react";
@@ -9,7 +9,6 @@ import useToast from "../hooks/useToast";
 import { User } from "firebase/auth";
 import Fade from "react-bootstrap/Fade";
 import DropdownButton from "react-bootstrap/DropdownButton";
-
 
 interface Recarga {
   id: string;
@@ -40,9 +39,8 @@ export const AdminDashboard = (props: AccountProps) => {
   const [loadingTabla, setLoadingTabla] = useState(true);
   const { showToast, toast } = useToast();
   const [tituloDDL, setTituloDDL] = useState("");
-  const [statusFilter , setStatusFilter] = useState("");
-  const [specificFilter , setSpecificFilter] = useState("");
-  
+  const [statusFilter, setStatusFilter] = useState("");
+  const [specificFilter, setSpecificFilter] = useState("");
 
   const convertDate = (date: number) => {
     const convertedDate: Date = new Date(date);
@@ -67,7 +65,6 @@ export const AdminDashboard = (props: AccountProps) => {
       setData(dbData);
       setLoading(false);
       filtrarPorEstado("All", "", dbData);
-
     };
 
     dbSnap();
@@ -75,50 +72,53 @@ export const AdminDashboard = (props: AccountProps) => {
 
   const cachedData = useMemo(() => [...data], [data]);
 
-  const filtrarPorEstado = (estado: string, specificSearch?: string ,array?: Recarga[]) => {
+  const filtrarPorEstado = (
+    estado: string,
+    specificSearch?: string,
+    array?: Recarga[]
+  ) => {
     setLoadingTabla(true);
-
 
     let listaFiltrada: Recarga[] = [];
 
     if (array == null) {
-      listaFiltrada = data.filter((recarga: Recarga) => recarga.estadoRecarga === estado);
-      console.log(listaFiltrada)
-      
+      listaFiltrada = data.filter(
+        (recarga: Recarga) => recarga.estadoRecarga === estado
+      );
+      console.log(listaFiltrada);
     }
 
     if (array != null) {
-      if (estado == "All") 
-      {
+      if (estado == "All") {
         listaFiltrada = array;
-      } else 
-      {
-        listaFiltrada = array.filter((recarga: Recarga) => recarga.estadoRecarga === estado);
+      } else {
+        listaFiltrada = array.filter(
+          (recarga: Recarga) => recarga.estadoRecarga === estado
+        );
       }
-
     }
 
-
-    if(specificSearch != null)
-    {
-      listaFiltrada = listaFiltrada.filter((recarga: Recarga) =>
-      recarga.idComprador.toLowerCase().includes(specificSearch.trim().toLowerCase()) ||
-      recarga.paypalOrderID.toLowerCase().includes(specificSearch.trim().toLowerCase()));
-
+    if (specificSearch != null) {
+      listaFiltrada = listaFiltrada.filter(
+        (recarga: Recarga) =>
+          recarga.idComprador
+            .toLowerCase()
+            .includes(specificSearch.trim().toLowerCase()) ||
+          recarga.paypalOrderID
+            .toLowerCase()
+            .includes(specificSearch.trim().toLowerCase())
+      );
     }
- 
-    
+
     listaFiltrada.sort(function (a, b) {
       return b.date - a.date;
     });
-
 
     setTimeout(() => {
       setTituloDDL(estado);
       setStatusFilter(estado);
       setDataFiltrada(listaFiltrada || []);
       setLoadingTabla(false);
-
     }, 175);
   };
 
@@ -162,9 +162,8 @@ export const AdminDashboard = (props: AccountProps) => {
   }).length;
 
   function handleChangeSearch(value: string) {
-    setSpecificFilter(value)
-    filtrarPorEstado(statusFilter,value,data)
-
+    setSpecificFilter(value);
+    filtrarPorEstado(statusFilter, value, data);
   }
 
   return (
@@ -223,6 +222,7 @@ export const AdminDashboard = (props: AccountProps) => {
 
             <table className="table caption-top bg-white rounded mt-2 table-sm">
               <caption className="text-white fs-4">Orders </caption>
+
               <caption>
                 <DropdownButton
                   className=""
@@ -230,34 +230,51 @@ export const AdminDashboard = (props: AccountProps) => {
                   id="dropdown-basic-button"
                   title={tituloDDL}
                 >
-                  <Dropdown.Item onClick={() => filtrarPorEstado("All", specificFilter, data)}>
+                  <Dropdown.Item
+                    onClick={() =>
+                      filtrarPorEstado("All", specificFilter, data)
+                    }
+                  >
                     All
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={() => filtrarPorEstado(Status.Completed, specificFilter)}
+                    onClick={() =>
+                      filtrarPorEstado(Status.Completed, specificFilter)
+                    }
                   >
                     Completed
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={() => filtrarPorEstado(Status.Pending, specificFilter)}
+                    onClick={() =>
+                      filtrarPorEstado(Status.Pending, specificFilter)
+                    }
                   >
                     Pending
                   </Dropdown.Item>
                   <Dropdown.Item
-                    onClick={() => filtrarPorEstado(Status.Cancelled, specificFilter)}
+                    onClick={() =>
+                      filtrarPorEstado(Status.Cancelled, specificFilter)
+                    }
                   >
                     Cancelled
                   </Dropdown.Item>
                 </DropdownButton>
+                <br />
+                <Form.Control
+                  type="text"
+                  id="inputPassword5"
+                  aria-describedby="passwordHelpBlock"
+                  placeholder="Search by UserID or PaypalOrderID"
+                  onChange={(e) => handleChangeSearch(e.target.value)}
+                />
 
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                    required
-                    onChange={(e) => handleChangeSearch(e.target.value) }
-                  />
-
+                {/* <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search by UserID or PaypalOrderID"
+                  required
+                  onChange={(e) => handleChangeSearch(e.target.value)}
+                /> */}
               </caption>
 
               <thead>
