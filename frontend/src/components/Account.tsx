@@ -3,7 +3,7 @@ import authServiceInstance from "../service/AuthService";
 import { User } from "firebase/auth";
 import { Button } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -32,7 +32,6 @@ type AccountProps = {
 
 export const Account = (props: AccountProps) => {
   const navigate = useNavigate();
-  const [data, setData] = useState<Recarga[]>([]);
   const [dataFiltrada, setDataFiltrada] = useState<Recarga[]>([]);
 
   const handleLogout = async () => {
