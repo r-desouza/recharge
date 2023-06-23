@@ -216,7 +216,8 @@ const SendRecharge = (props: SendRechargeProps) => {
                   onClick={() => {
                     if (
                       Object.values(selectedCountry)[0] === undefined ||
-                      amount == "00.00"
+                      amount == "00.00" ||
+                      !phone
                     ) {
                       throw new Error("Invalid input");
                     }
