@@ -8,6 +8,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { User } from "firebase/auth";
 import { InputMask } from "primereact/inputmask";
 import useToast from "../hooks/useToast";
+import emailjs from "@emailjs/browser";
 
 interface SendRechargeProps {
   user: User | null;
@@ -103,6 +104,23 @@ const SendRecharge = (props: SendRechargeProps) => {
       showToast("Successs", "Recharge submitted successfully");
 
       await addDoc(collection(db, "recargas"), recarga);
+
+      emailjs
+        .send(
+          import.meta.env.VITE_EMAIL_SERVICE_ID,
+          import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+          { user_email: props.user?.email, message: JSON.stringify(recarga) },
+          import.meta.env.VITE_EMAIL_USER_ID
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+            console.log("message sent");
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
     } catch (e) {
       showToast("Server error", "Failed submit order, please contact support.");
     }
