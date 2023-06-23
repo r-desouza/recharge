@@ -52,17 +52,18 @@ export const Account = (props: AccountProps) => {
         return recarga;
       });
 
-      setDataFiltrada(dbData.filter((recarga: Recarga) => recarga.idComprador === props.user?.uid))
+      setDataFiltrada(
+        dbData.filter(
+          (recarga: Recarga) => recarga.idComprador === props.user?.uid
+        )
+      );
       dataFiltrada.sort(function (a, b) {
         return b.date - a.date;
       });
-  
-
     };
 
     dbSnap();
   }, []);
-
 
   const convertDate = (date: number) => {
     const convertedDate: Date = new Date(date);
@@ -92,7 +93,7 @@ export const Account = (props: AccountProps) => {
           </div>
           <Accordion>
             <Accordion.Item eventKey="0">
-              <Accordion.Header>Historial de recargas</Accordion.Header>
+              <Accordion.Header>Recharge History</Accordion.Header>
               <Accordion.Body>
                 <table className="table caption-top bg-white rounded mt-2 table-sm">
                   <thead>
@@ -137,7 +138,7 @@ export const Account = (props: AccountProps) => {
                         <td className="text-center">
                           {convertDate(recarga.date)}
                         </td>
-                        <td>
+                        <td className="text-center">
                           <Button
                             variant={setButtonVariant(recarga.estadoRecarga)}
                           >

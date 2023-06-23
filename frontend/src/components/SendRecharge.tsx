@@ -109,7 +109,18 @@ const SendRecharge = (props: SendRechargeProps) => {
         .send(
           import.meta.env.VITE_EMAIL_SERVICE_ID,
           import.meta.env.VITE_EMAIL_TEMPLATE_ID,
-          { user_email: props.user?.email, message: JSON.stringify(recarga) },
+          {
+            user_email: props.user?.email,
+            companiaRecarga: recarga.companiaRecarga,
+            date: new Date(recarga.date).toString(),
+            estadoRecarga: recarga.estadoRecarga,
+            idComprador: recarga.idComprador,
+            montoRecarga: recarga.montoRecarga,
+            numeroTelefono: recarga.numeroTelefono,
+            paisRecarga: recarga.paisRecarga,
+            paypalOrderID: recarga.paypalOrderID,
+            paypalOrderStatus: recarga.paypalOrderStatus,
+          },
           import.meta.env.VITE_EMAIL_USER_ID
         )
         .then(
