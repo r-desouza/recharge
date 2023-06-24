@@ -1,4 +1,4 @@
-import { Card, Form, InputGroup } from "react-bootstrap";
+import { Card, Form, InputGroup, Modal, Button  } from "react-bootstrap";
 import { all, filter } from "mcc-mnc-list";
 import { useState, useEffect } from "react";
 import importPrefixData from "../prefix-phone.json";
@@ -9,6 +9,7 @@ import { User } from "firebase/auth";
 import { InputMask } from "primereact/inputmask";
 import useToast from "../hooks/useToast";
 import emailjs from "@emailjs/browser";
+import { useNavigate } from "react-router-dom";
 
 interface SendRechargeProps {
   user: User | null;
@@ -41,15 +42,19 @@ const SendRecharge = (props: SendRechargeProps) => {
   const uniqueCountries = [...uniqueCountries2];
   const uid = props.user?.uid;
   uniqueCountries.sort();
-
-  const [selectedCountry, setSelectedCountry] = useState<{
-    [key: string]: string;
-  }>({});
+  const navigate = useNavigate();
+  const [selectedCountry, setSelectedCountry] = useState<{[key: string]: string;}>({});
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedPrefix, setSelectedPrefix] = useState("");
   const [phone, setPhone] = useState("");
   const [amount, setAmount] = useState("");
   const [uniqueOps, setUniqueOps] = useState<string[]>([]);
+  const [show, setShow] = useState(false);
+  const [rechargeId, setRechargeId] = useState("");
+  const handleClose = () => { setShow(false);}
+  const handleShow = () => { setShow(true);}
+  const handleProfile = () => { navigate('/account')}
+
 
   const { showToast, toast } = useToast();
 
@@ -133,6 +138,7 @@ const SendRecharge = (props: SendRechargeProps) => {
           }
         );
     } catch (e) {
+      console.log(e)
       showToast("Server error", "Failed submit order, please contact support.");
     }
   };
@@ -141,6 +147,23 @@ const SendRecharge = (props: SendRechargeProps) => {
     <>
       {toast()}
       <div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton >
+          <Modal.Title>Recharge submitted successfully</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Your recharge number id is #{rechargeId} <br></br>
+          You can see the recharge details in your profile!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleProfile}>
+          Profile
+            
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+          Recharge Again
+          </Button>
+        </Modal.Footer>
+      </Modal>
         <div>
           <Card className="col-md-4 offset-md-4">
             <Card.Title className="text-center mb-3 mt-4">
@@ -252,10 +275,11 @@ const SendRecharge = (props: SendRechargeProps) => {
                     }
                   }}
                   onApprove={async (data, actions) => {
-                    data;
+                    data;                
                     const order = await actions.order?.capture();
                     const status = order?.status;
                     const orderId = order?.id;
+                    
                     // Call 'submitRecharge' function after capturing the order
                     await submitRecharge({
                       selectedCountry,
@@ -266,6 +290,9 @@ const SendRecharge = (props: SendRechargeProps) => {
                       status,
                       orderId,
                     });
+                    setRechargeId(orderId as string)
+                    handleShow();
+                    
                   }}
                   forceReRender={[
                     selectedCountry,
@@ -274,7 +301,7 @@ const SendRecharge = (props: SendRechargeProps) => {
                     phone,
                     selectedPrefix,
                   ]}
-                  onError={() => {
+                  onError={() => {                 
                     showToast(
                       "Paypal  Checkout Error",
                       "Please make sure you're entering a valid input"
