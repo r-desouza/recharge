@@ -172,6 +172,7 @@ export const AdminDashboard = (props: AccountProps) => {
       {!loading && (
         <>
           {toast()}
+          
           <div className="px-3">
             <div className="card">
               <div className="card-header">
@@ -313,8 +314,12 @@ export const AdminDashboard = (props: AccountProps) => {
                   {dataFiltrada.map((recarga, index) => (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
-                      <td className="text-center font-bold text-blue-900 ">{recarga.idComprador}</td>
-                      <td className="text-center font-bold text-red-600">{recarga.paisRecarga}</td>
+                      <td className="text-center font-bold text-blue-900 ">
+                        {recarga.idComprador}
+                      </td>
+                      <td className="text-center font-bold text-red-600">
+                        {recarga.paisRecarga}
+                      </td>
                       <td className="text-center">{recarga.companiaRecarga}</td>
                       <td className="text-center">{recarga.numeroTelefono}</td>
                       <td className="text-center">{recarga.paypalOrderID}</td>
@@ -322,19 +327,23 @@ export const AdminDashboard = (props: AccountProps) => {
                       <td className="text-center">
                         {convertDate(recarga.date)}
                       </td>
-                      <td>
-                        <Dropdown as={ButtonGroup}>
-                          <Button
-                            variant={setButtonVariant(recarga.estadoRecarga)}
-                          >
+                      <td > 
+                      {/* <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">{recarga.estadoRecarga}<svg className="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button> */}
+
+                        <Dropdown  as={ButtonGroup} className="col-12">
+
+                          <Button variant={setButtonVariant(recarga.estadoRecarga)}>
                             {recarga.estadoRecarga}
                           </Button>
 
+                          
+
                           <Dropdown.Toggle
-                            split
+                            split 
                             variant={setButtonVariant(recarga.estadoRecarga)}
                             id="dropdown-split-basic"
                           />
+
 
                           <Dropdown.Menu>
                             <Dropdown.Item
@@ -342,7 +351,7 @@ export const AdminDashboard = (props: AccountProps) => {
                                 updateDocument(recarga.id, Status.Pending)
                               }
                             >
-                              Pending
+                              Pending.
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
