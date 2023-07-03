@@ -220,7 +220,7 @@ export const AdminDashboard = (props: AccountProps) => {
               </div>
             </div>
 
-            <table className="table caption-top bg-white rounded mt-2 table-sm">
+            <table className="caption-top bg-white rounded mt-2 table-sm">
               <caption className="text-white fs-4">Orders </caption>
 
               <caption>
@@ -309,12 +309,12 @@ export const AdminDashboard = (props: AccountProps) => {
                 </tr>
               </thead>
               <Fade timeout={100} in={!loadingTabla}>
-                <tbody style={{ fontSize: "14px" }}>
+                <tbody>
                   {dataFiltrada.map((recarga, index) => (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
-                      <td className="text-center">{recarga.idComprador}</td>
-                      <td className="text-center">{recarga.paisRecarga}</td>
+                      <td className="text-center font-bold text-blue-900 ">{recarga.idComprador}</td>
+                      <td className="text-center font-bold text-red-600">{recarga.paisRecarga}</td>
                       <td className="text-center">{recarga.companiaRecarga}</td>
                       <td className="text-center">{recarga.numeroTelefono}</td>
                       <td className="text-center">{recarga.paypalOrderID}</td>
