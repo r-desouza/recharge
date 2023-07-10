@@ -172,6 +172,7 @@ export const AdminDashboard = (props: AccountProps) => {
       {!loading && (
         <>
           {toast()}
+          
           <div className="px-3">
             <div className="card">
               <div className="card-header">
@@ -220,7 +221,7 @@ export const AdminDashboard = (props: AccountProps) => {
               </div>
             </div>
 
-            <table className="table caption-top bg-white rounded mt-2 table-sm">
+            <table className="caption-top bg-white rounded mt-2 table-sm table table-striped">
               <caption className="text-white fs-4">Orders </caption>
 
               <caption>
@@ -268,13 +269,6 @@ export const AdminDashboard = (props: AccountProps) => {
                   onChange={(e) => handleChangeSearch(e.target.value)}
                 />
 
-                {/* <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search by UserID or PaypalOrderID"
-                  required
-                  onChange={(e) => handleChangeSearch(e.target.value)}
-                /> */}
               </caption>
 
               <thead>
@@ -309,12 +303,16 @@ export const AdminDashboard = (props: AccountProps) => {
                 </tr>
               </thead>
               <Fade timeout={100} in={!loadingTabla}>
-                <tbody style={{ fontSize: "14px" }}>
+                <tbody>
                   {dataFiltrada.map((recarga, index) => (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
-                      <td className="text-center">{recarga.idComprador}</td>
-                      <td className="text-center">{recarga.paisRecarga}</td>
+                      <td className="text-center font-bold text-blue-900 ">
+                        {recarga.idComprador}
+                      </td>
+                      <td className="text-center font-bold text-red-600">
+                        {recarga.paisRecarga}
+                      </td>
                       <td className="text-center">{recarga.companiaRecarga}</td>
                       <td className="text-center">{recarga.numeroTelefono}</td>
                       <td className="text-center">{recarga.paypalOrderID}</td>
@@ -322,19 +320,23 @@ export const AdminDashboard = (props: AccountProps) => {
                       <td className="text-center">
                         {convertDate(recarga.date)}
                       </td>
-                      <td>
-                        <Dropdown as={ButtonGroup}>
-                          <Button
-                            variant={setButtonVariant(recarga.estadoRecarga)}
-                          >
+                      <td > 
+  
+
+                        <Dropdown  as={ButtonGroup} className="col-12">
+
+                          <Button variant={setButtonVariant(recarga.estadoRecarga)} >
                             {recarga.estadoRecarga}
                           </Button>
 
+                          
+
                           <Dropdown.Toggle
-                            split
+                            split 
                             variant={setButtonVariant(recarga.estadoRecarga)}
                             id="dropdown-split-basic"
                           />
+
 
                           <Dropdown.Menu>
                             <Dropdown.Item
@@ -342,7 +344,7 @@ export const AdminDashboard = (props: AccountProps) => {
                                 updateDocument(recarga.id, Status.Pending)
                               }
                             >
-                              Pending
+                              Pending.
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
