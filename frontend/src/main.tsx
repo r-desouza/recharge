@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import {BrowserRouter} from 'react-router-dom'
 import './bootstrap.min.css'
+import 'flowbite';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>

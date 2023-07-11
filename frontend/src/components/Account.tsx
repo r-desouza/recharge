@@ -95,10 +95,10 @@ export const Account = (props: AccountProps) => {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Recharge History</Accordion.Header>
               <Accordion.Body>
-                <table className="table caption-top bg-white rounded mt-2 table-sm">
+                <table className="table caption-top bg-white rounded mt-2 table-sm ">
                   <thead>
                     <tr>
-                      <th className="text-center" scope="col">
+                      <th className="text-center " scope="col">
                         #
                       </th>
                       <th className="text-center" scope="col">

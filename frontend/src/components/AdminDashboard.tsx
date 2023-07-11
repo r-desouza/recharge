@@ -173,6 +173,7 @@ export const AdminDashboard = (props: AccountProps) => {
         <>
           {toast()}
           
+          
           <div className="px-3">
             <div className="card">
               <div className="card-header">
@@ -220,11 +221,16 @@ export const AdminDashboard = (props: AccountProps) => {
                 </div>
               </div>
             </div>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
-            <table className="caption-top bg-white rounded mt-2 table-sm table table-striped">
-              <caption className="text-white fs-4">Orders </caption>
 
-              <caption>
+
+
+
+
+
+
+
                 <DropdownButton
                   className=""
                   variant="secondary"
@@ -269,11 +275,14 @@ export const AdminDashboard = (props: AccountProps) => {
                   onChange={(e) => handleChangeSearch(e.target.value)}
                 />
 
-              </caption>
+<br />
 
-              <thead>
-                <tr>
-                  <th className="text-center" scope="col">
+              
+            <table className="w-full text-xs text-gray-600">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-300">
+            <tr>
+
+                  <th className="px-6 py-4" scope="col">
                     #
                   </th>
                   <th className="text-center" scope="col">
@@ -300,30 +309,31 @@ export const AdminDashboard = (props: AccountProps) => {
                   <th className="text-center" scope="col">
                     status
                   </th>
-                </tr>
-              </thead>
-              <Fade timeout={100} in={!loadingTabla}>
-                <tbody>
-                  {dataFiltrada.map((recarga, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td className="text-center font-bold text-blue-900 ">
+
+            </tr>
+        </thead>
+        <Fade timeout={100} in={!loadingTabla}>
+        <tbody>
+        {dataFiltrada.map((recarga, index) => (
+                    <tr key={index} className="bg-gray-50 hover:bg-gray-200">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{index + 1}</th>
+                      <td className="text-center font-black text-blue-900 ">
                         {recarga.idComprador}
                       </td>
-                      <td className="text-center font-bold text-red-600">
+                      <td className="text-center font-extrabold text-red-600">
                         {recarga.paisRecarga}
                       </td>
-                      <td className="text-center">{recarga.companiaRecarga}</td>
-                      <td className="text-center">{recarga.numeroTelefono}</td>
-                      <td className="text-center">{recarga.paypalOrderID}</td>
-                      <td className="text-center">${recarga.montoRecarga}</td>
-                      <td className="text-center">
+                      <td className="text-center px-1 py-4">{recarga.companiaRecarga}</td>
+                      <td className="text-center px-1 py-4">{recarga.numeroTelefono}</td>
+                      <td className="text-center px-1 py-4">{recarga.paypalOrderID}</td>
+                      <td className="text-center px-1 py-4">${recarga.montoRecarga}</td>
+                      <td className="text-center px-2 py-4">
                         {convertDate(recarga.date)}
                       </td>
                       <td > 
   
 
-                        <Dropdown  as={ButtonGroup} className="col-12">
+                        <Dropdown  as={ButtonGroup} className="col-12 px-6 py-4">
 
                           <Button variant={setButtonVariant(recarga.estadoRecarga)} >
                             {recarga.estadoRecarga}
@@ -362,12 +372,18 @@ export const AdminDashboard = (props: AccountProps) => {
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
+
+                       
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </Fade>
-            </table>
+            
+        </tbody>
+        </Fade>
+    </table>
+</div>
+
+
           </div>
         </>
       )}

@@ -10,6 +10,8 @@ import { InputMask } from "primereact/inputmask";
 import useToast from "../hooks/useToast";
 import emailjs from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
+import { Label, TextInput } from 'flowbite-react';
+import { HiMail } from 'react-icons/hi';
 
 interface SendRechargeProps {
   user: User | null;
@@ -18,6 +20,8 @@ interface SendRechargeProps {
 interface PrefixData {
   [key: string]: any;
 }
+
+
 
 const prefixData = importPrefixData as PrefixData;
 
@@ -153,6 +157,23 @@ const SendRecharge = (props: SendRechargeProps) => {
   return (
     <>
       {toast()}
+      <div className="max-w-md">
+      <div className="mb-2 block">
+        <Label
+          htmlFor="email4"
+          value="Your email"
+        />
+      </div>
+
+      <TextInput
+        icon={HiMail}
+        id="email4"
+        placeholder="name@flowbite.com"
+        required
+        type="email"
+      />
+
+    </div>
       <div>
         <Modal show={show} onHide={handleClose}>
           <Card className="bg-dark text-white">
@@ -323,6 +344,17 @@ const SendRecharge = (props: SendRechargeProps) => {
               </Form>
             </Card.Body>
           </Card>
+        </div>
+        <div>
+        <label className="block mb-2 text-sm font-bold text-white dark:text-white ">Country</label>
+<select id="countries" className="bg-gray-900  border-gray-600 text-white text-sm rounded-xl font-bold focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+<option>Select country</option>
+                    {uniqueCountries.map((country) => (
+                      <option className="bg-gray-900  border-gray-600 text-white text-sm rounded-xl font-bold" key={country[1]} value={country}>
+                        {country[0]}
+                      </option>
+                    ))}
+</select>
         </div>
       </div>
     </>
