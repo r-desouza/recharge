@@ -25,4 +25,4 @@ Admin Dashboard
 ![Admin Dashboard](https://rdesouza.site/images/recharge-ss-1.png)
 
 User Dashboard
-![User Dashboard](https://rdesouza.site/images/recharge-ss-3.png)
+![User Dashboard](https://i.imgur.com/kVW5u22.png)
