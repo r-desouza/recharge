@@ -6,6 +6,7 @@ Recarge is a web application designed to offer a worldwide, hassle-free mobile r
 Some relevant information about this project:
 
 -  It was a Freelance Project, made from scratch, someone paid for it. Initially protected by NDA but the owner gave me permission to make it public.
+-  Developed using TypeScript and React
 -  Styled with HTML, CSS, Bootstrap and some Tailwind
 -  Originally used MongoDB to store our data, then switched to Firebase because of simplicity.
 -  Integrated with PayPal payments, using the PayPal API.
